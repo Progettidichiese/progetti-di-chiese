@@ -292,7 +292,6 @@ def pagina_relatore(sito, r, svelati):
 <article>
 <div class="profilo">
 <div class="profilo-foto"><div class="ritratto">{foto}</div><div class="filo"></div>{f'<p class="credito">{e(r["credito_foto"])}</p>' if r.get('credito_foto') else ''}</div>
-<div class="barra-v" aria-hidden="true"></div>
 <div class="profilo-testo">
 <span class="etichetta">Relatore {r['id']} · {e(r.get('ruolo'))}</span>
 <h1>{e(nome)}</h1>
@@ -313,6 +312,23 @@ def pagina_relatore(sito, r, svelati):
 {f'<a href="{base}relatori/{succ["id"]}/{IDX}">{e(succ.get("nome"))} {e(succ.get("cognome"))} →</a>' if succ else '<span></span>'}
 </nav>
 </div>
+<script>
+(function () {{
+  var c = document.querySelector(".copertina"), b = c && c.querySelector(".copertina-barra");
+  if (!b || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var att = false;
+  function aggiorna() {{
+    att = false;
+    var fine = c.offsetTop + c.offsetHeight;
+    var p = Math.min(1, Math.max(0, window.scrollY / (fine * 0.75)));
+    var k = p * p * (3 - 2 * p);
+    b.style.transform = "translate3d(" + (k * window.innerWidth) + "px,0,0)";
+  }}
+  window.addEventListener("scroll", function () {{ if (!att) {{ att = true; requestAnimationFrame(aggiorna); }} }}, {{ passive: true }});
+  window.addEventListener("resize", aggiorna);
+  aggiorna();
+}})();
+</script>
 """ + piede(sito)
 
 

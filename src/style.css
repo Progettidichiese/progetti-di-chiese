@@ -166,35 +166,33 @@ a:hover { color: var(--viola-scuro); }
 .in-arrivo { font-family: var(--geo); font-size: 19px; line-height: 1.55; max-width: 640px; margin: 0; }
 
 /* Pagina relatore: copertina orizzontale + ritratto che vi si sovrappone */
-.copertina { margin: 8px 0 0; position: relative; }
+.copertina { margin: 8px 0 0; position: relative; overflow: hidden; overflow-x: clip; overflow-y: visible; }
 .copertina-img { position: relative; width: 100%; height: clamp(240px, 56vh, 640px); background: var(--pietra); overflow: hidden; display: flex; align-items: center; justify-content: center; padding: 24px; text-align: center; }
 .copertina-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.copertina-barra { height: var(--barra); background: var(--lime); width: 72%; }
+.copertina-barra { height: var(--barra); background: var(--lime); width: 72%; will-change: transform; }
 .copertina figcaption { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px 12px; padding-top: 10px; font-size: 13px; color: var(--grigio); text-align: right; }
 .copertina figcaption .credito { margin: 0; }
 @media (min-width: 861px) {
-  .profilo-foto { margin-top: -200px; position: relative; z-index: 1; }
-  .profilo > .barra-v { margin-top: -300px; position: relative; z-index: 2; }
+  .profilo-foto { margin-top: -150px; position: relative; z-index: 1; }
   .profilo-foto .ritratto { box-shadow: 0 0 0 10px var(--carta); }
 }
 @media (max-width: 860px) {
   .copertina-img { height: clamp(200px, 42vh, 360px); }
   .copertina-barra { width: 85%; }
-  .profilo-foto { margin-top: -90px; position: relative; z-index: 1; max-width: 70%; }
+  .profilo-foto { margin-top: -80px; position: relative; z-index: 1; max-width: 55%; }
   .copertina figcaption { position: absolute; top: 12px; right: 12px; max-width: calc(100% - 24px); padding: 6px 10px; background: rgba(252, 251, 248, 0.92); color: var(--inchiostro); }
   .profilo-foto .ritratto { box-shadow: 0 0 0 6px var(--carta); }
 }
 
 /* Pagina relatore */
 .indietro { display: inline-flex; align-items: center; min-height: 44px; margin-top: 12px; font-weight: 700; font-size: 15px; text-decoration: none; }
-.profilo { margin-top: 40px; display: grid; grid-template-columns: minmax(260px, 440px) 14px minmax(0, 1fr); gap: 56px; align-items: stretch; }
+.profilo { margin-top: 40px; display: grid; grid-template-columns: minmax(200px, 300px) minmax(0, 1fr); gap: clamp(32px, 5vw, 72px); align-items: start; }
 .profilo .ritratto { aspect-ratio: 4 / 5; }
 .profilo .ritratto img { filter: none; }
 .profilo .filo { height: 14px; }
-.profilo > .barra-v { width: 14px; background: var(--viola); }
 .profilo-testo { display: flex; flex-direction: column; gap: 24px; min-width: 0; }
 .profilo-testo .etichetta { font-size: 14px; letter-spacing: 0.12em; color: var(--viola); }
-.profilo-testo h1 { margin: 0; font-family: var(--serif); font-weight: 900; font-size: clamp(46px, 6vw, 92px); line-height: 0.95; letter-spacing: -0.02em; }
+.profilo-testo h1 { margin: 0; font-family: var(--serif); font-weight: 900; font-size: clamp(44px, 5.4vw, 84px); line-height: 1.06; letter-spacing: -0.01em; }
 .qualifica { margin: 0; font-size: 20px; font-weight: 600; }
 .bio { margin: 0; font-family: var(--geo); font-size: 19px; line-height: 1.6; max-width: 640px; }
 .intervento { border-top: 1px solid var(--linea); padding-top: 20px; display: flex; flex-direction: column; gap: 6px; }
@@ -220,7 +218,6 @@ a:hover { color: var(--viola-scuro); }
 
 @media (max-width: 860px) {
   .profilo { grid-template-columns: minmax(0, 1fr); gap: 32px; }
-  .profilo > .barra-v { display: none; }
 }
 
 /* Piede */
