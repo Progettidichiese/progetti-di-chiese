@@ -47,6 +47,8 @@ La riga con id "00" è l'esempio del modello e viene ignorata.
 - Apertura: sotto la data solo "Politecnico di Milano" in grassetto (l aula compare in Come arrivare).
 - Al passaggio del mouse foto e testi delle schede, link e pulsanti si ingrandiscono leggermente (solo dispositivi con mouse, mai con riduci movimento).
 - Pagina relatore: in alto copertina orizzontale grande = immagine del progetto con ordine 1 (con didascalia). Sotto, barra lime che passa sotto il ritratto (piccolo, sovrapposto alla copertina) e scorrendo esce verso destra; nessuna barra viola su questa pagina.
+- Comparsa morbida allo scorrimento (dissolvenza + leggero sollevamento, a cascata) per schede relatori, organizzatori, progetti e titoli di sezione; classe "anima" aggiunta in <head> per evitare lampeggi.
+- La pagina relatore si apre sempre dall alto.
 - Titolo "Progetti di chiese": interlinea >= 1.16 (1.24 su telefono) perché la g di Progetti non tocchi la h di chiese.
 - Font ufficiali: Bodoni 72 / Bodoni URW (titoli), ITC Avant Garde Gothic Pro (testo), Neue Haas Grotesk (maiuscoletti, etichette).
   Per ora sostituti open source ospitati sul sito (src/pubblici/fonts, licenza OFL): Bodoni Moda, Questrial, Inter Tight. Quando arriva il kit Adobe Fonts

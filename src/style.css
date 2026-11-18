@@ -251,3 +251,10 @@ a:hover { color: var(--viola-scuro); }
   .menu a, .collegamenti a { display: inline-block; }
   .naviga a:last-child { transform-origin: right center; }
 }
+
+/* Comparsa allo scorrimento (attiva solo se il JavaScript la abilita) */
+.anima .griglia > li, .anima .organizzatori > li, .anima .progetti-griglia > li, .anima .sezione-testa {
+  opacity: 0; transform: translate3d(0, 28px, 0) scale(0.985);
+  transition: opacity 1s cubic-bezier(.2, .7, .2, 1), transform 1.1s cubic-bezier(.2, .7, .2, 1);
+}
+.anima .visibile { opacity: 1 !important; transform: none !important; }

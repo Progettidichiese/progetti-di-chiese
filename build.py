@@ -70,6 +70,7 @@ def testa(sito, titolo, base, descrizione=""):
 {'<meta name="robots" content="noindex, nofollow">' if sito.get('in_costruzione') else ''}
 <link rel="preload" href="{base}fonts/bodoni-moda-latin-standard-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{base}style.css">
+<script>if ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("anima");</script>
 </head>
 <body>
 <header class="testata">
@@ -89,6 +90,27 @@ def testa(sito, titolo, base, descrizione=""):
 """
 
 
+ANIMA_JS = """<script>
+/* Comparsa morbida degli elementi allo scorrimento */
+(function () {
+  if (!("IntersectionObserver" in window) || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var el = document.querySelectorAll(".griglia > li, .organizzatori > li, .progetti-griglia > li, .sezione-testa");
+  if (!el.length) return;
+  if (!document.documentElement.classList.contains("anima")) return;
+  var io = new IntersectionObserver(function (voci) {
+    var n = 0;
+    voci.forEach(function (v) {
+      if (!v.isIntersecting) return;
+      v.target.style.transitionDelay = (n++ * 90) + "ms";
+      v.target.classList.add("visibile");
+      io.unobserve(v.target);
+    });
+  }, { rootMargin: "0px 0px -8% 0px", threshold: 0.12 });
+  el.forEach(function (x) { io.observe(x); });
+})();
+</script>"""
+
+
 def piede(sito):
     ig = (f'<a href="{e(sito["instagram_url"])}">{e(sito.get("instagram_nome") or "Instagram")} ↗</a>'
           if sito.get("instagram_url") else '<span class="segnaposto-testo">[account Instagram]</span>')
@@ -101,6 +123,7 @@ def piede(sito):
 <div class="col geo"><span>{e(sito['date'])} · {e(sito['sede'])}</span><span>{e(sito['aula'])}</span>{mail}{ig}</div>
 </div>
 </footer>
+{ANIMA_JS}
 </body>
 </html>
 """
@@ -313,6 +336,8 @@ def pagina_relatore(sito, r, svelati):
 </nav>
 </div>
 <script>
+if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+if (!location.hash) window.scrollTo(0, 0);
 (function () {{
   var c = document.querySelector(".copertina"), b = c && c.querySelector(".copertina-barra");
   if (!b || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
