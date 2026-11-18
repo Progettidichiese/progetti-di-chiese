@@ -1,0 +1,9 @@
+# sito generato
+_site/
+# dati in chiaro dei relatori: NON devono mai finire su GitHub (si pubblica solo data/dati.enc)
+data/privato/
+# file di lavoro
+*.xlsx
+*.zip
+__pycache__/
+.DS_Store

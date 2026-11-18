@@ -1,0 +1,59 @@
+name: Pubblica il sito
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    # ogni giorno alle 05:05 UTC = 06:05 ora italiana (ora solare)
+    - cron: "5 5 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Decifra i dati dei relatori
+        env:
+          CHIAVE_DATI: ${{ secrets.CHIAVE_DATI }}
+        run: |
+          if [ -f data/dati.enc ]; then
+            if [ -z "$CHIAVE_DATI" ]; then
+              echo "::error::Manca il secret CHIAVE_DATI: impossibile decifrare data/dati.enc"
+              exit 1
+            fi
+            bash tools/cifra.sh decifra
+          else
+            echo "Nessun data/dati.enc: uso i dati di prova."
+          fi
+
+      - name: Genera il sito
+        run: python3 build.py
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

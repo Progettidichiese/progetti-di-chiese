@@ -1,0 +1,161 @@
+/* Progetti di chiese — stile del sito
+   Font sostitutivi (Google Fonts) in attesa del kit Adobe Fonts:
+   Bodoni Moda ≈ Bodoni 72 / Bodoni URW · Questrial ≈ ITC Avant Garde Gothic · Inter Tight ≈ Neue Haas Grotesk */
+
+:root {
+  --carta: #FCFBF8;
+  --inchiostro: #111111;
+  --viola: #7B2560;
+  --viola-scuro: #561843;
+  --lime: #B2CC2A;
+  --malva: #D3B6C9;
+  --grigio: #5A5650;
+  --pietra: #E4DFD8;
+  --linea: #E2DDD6;
+  --serif: "Bodoni Moda", "ITC Bodoni Seventytwo", "Bodoni 72", serif;
+  --geo: "Questrial", "ITC Avant Garde Gothic Pro", sans-serif;
+  --grot: "Inter Tight", "Neue Haas Grotesk Text", "Helvetica Neue", Arial, sans-serif;
+  --barra: 18px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--carta); color: var(--inchiostro); font-family: var(--grot); -webkit-font-smoothing: antialiased; }
+img { display: block; max-width: 100%; }
+a { color: var(--viola); }
+a:hover { color: var(--viola-scuro); }
+:focus-visible { outline: 3px solid var(--viola); outline-offset: 3px; }
+
+.wrap { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+@media (max-width: 640px) { .wrap { padding: 0 20px; } }
+
+.serif { font-family: var(--serif); }
+.geo { font-family: var(--geo); }
+.evidenzia { box-shadow: inset 0 -0.34em 0 var(--malva); }
+.etichetta { font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Testata */
+.testata { border-bottom: 1px solid var(--linea); }
+.testata .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; padding-top: 14px; padding-bottom: 14px; }
+.marchio { display: flex; align-items: center; gap: 16px; color: var(--inchiostro); text-decoration: none; min-height: 44px; }
+.marchio:hover { color: var(--inchiostro); }
+.logo-polimi { display: flex; align-items: center; justify-content: center; width: 120px; height: 44px; border: 1px dashed #9A948A; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--grigio); }
+.marchio .serif { font-weight: 900; font-size: 24px; letter-spacing: -0.01em; }
+.menu { display: flex; flex-wrap: wrap; gap: 4px 28px; font-size: 14px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+.menu a { color: var(--inchiostro); text-decoration: none; padding: 12px 0; }
+.menu a:hover { color: var(--viola); }
+.menu a.ig { color: var(--viola); }
+
+/* Apertura con la croce */
+.apertura { display: grid; grid-template-columns: minmax(180px, 260px) var(--barra) minmax(0, 1fr); column-gap: 56px; }
+.curatori { display: flex; flex-direction: column; align-items: flex-end; text-align: right; padding-top: 72px; gap: 6px; }
+.curatori .serif { font-weight: 900; font-size: 26px; margin-bottom: 8px; }
+.curatori span.geo { font-size: 19px; }
+.barra-v { background: var(--viola); }
+.apertura .titolo { padding: 64px 0 56px; display: flex; flex-direction: column; align-items: flex-end; text-align: right; min-width: 0; }
+.data-grande { font-family: var(--serif); font-weight: 900; font-size: 44px; letter-spacing: -0.01em; }
+.sede { margin-top: 14px; font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
+.aula { font-family: var(--geo); font-size: 19px; }
+.tipo { margin-top: 32px; font-size: 22px; font-weight: 700; line-height: 1.3; letter-spacing: -0.01em; }
+.apertura h1 { margin: 40px 0 0; font-family: var(--serif); font-weight: 900; font-size: clamp(60px, 10vw, 156px); line-height: 0.92; letter-spacing: -0.025em; }
+.barra-o { align-self: stretch; height: var(--barra); background: var(--lime); margin: 28px 0 0 calc(-56px - var(--barra) - 66px); }
+.sottotitolo { margin: 28px 0 0; font-family: var(--serif); font-weight: 700; font-size: clamp(22px, 2.6vw, 38px); }
+
+.intro { display: grid; grid-template-columns: minmax(180px, 260px) var(--barra) minmax(0, 1fr); column-gap: 56px; margin-bottom: 88px; }
+.intro-corpo { padding: 0 0 40px; }
+.intro-corpo { grid-column: 3; display: flex; flex-wrap: wrap; gap: 40px; justify-content: space-between; align-items: flex-start; }
+.intro p { margin: 0; flex: 1 1 420px; font-family: var(--geo); font-size: 19px; line-height: 1.55; text-align: justify; hyphens: auto; }
+.prossimo { flex: 0 1 260px; display: flex; flex-direction: column; gap: 6px; padding: 22px 24px; background: var(--viola); color: var(--carta); }
+.prossimo .serif { font-weight: 900; font-size: 32px; }
+.prossimo .geo { font-size: 15px; }
+
+@media (max-width: 860px) {
+  .apertura, .intro { grid-template-columns: var(--barra) minmax(0, 1fr); column-gap: 24px; }
+  .apertura > div:first-child { display: none; }
+  .apertura .titolo { padding: 40px 0 40px; }
+  .intro .curatori { grid-column: 2; grid-row: 2; align-items: flex-start; text-align: left; padding: 8px 0 40px; }
+  .intro .barra-v { grid-column: 1; grid-row: 1 / span 2; }
+  .intro-corpo { grid-row: 1; }
+  .barra-o { margin-left: calc(-24px - var(--barra) - 20px); }
+  .intro-corpo { grid-column: 2; }
+  .intro p { text-align: left; }
+}
+
+/* Sezioni */
+.sezione { padding-bottom: 120px; }
+.sezione-testa { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 16px; border-top: 2px solid var(--inchiostro); padding-top: 20px; margin-bottom: 40px; }
+.sezione-testa h2 { margin: 0; font-family: var(--serif); font-weight: 900; font-size: clamp(38px, 5vw, 52px); letter-spacing: -0.02em; }
+.sezione-testa p { margin: 0; font-family: var(--geo); font-size: 16px; }
+
+/* Griglia relatori */
+.griglia { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 48px 32px; list-style: none; margin: 0; padding: 0; }
+.scheda { display: flex; flex-direction: column; color: var(--inchiostro); text-decoration: none; }
+.scheda:hover { color: var(--inchiostro); }
+.ritratto { width: 100%; aspect-ratio: 4 / 5; background: var(--pietra); position: relative; overflow: hidden; }
+.ritratto img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); transition: filter .3s ease, transform .4s ease; }
+.scheda:hover .ritratto img, .scheda:focus-visible .ritratto img { filter: none; transform: scale(1.02); }
+.ritratto .segnaposto { position: absolute; inset: auto 18px 18px 18px; display: flex; justify-content: space-between; align-items: flex-end; }
+.ritratto .num { font-family: var(--serif); font-weight: 900; font-size: 48px; line-height: 1; color: #B9B2A7; }
+.filo { height: 10px; background: var(--lime); }
+.scheda-testo { display: flex; flex-direction: column; gap: 4px; padding-top: 16px; }
+.scheda-testo .etichetta { color: var(--viola); }
+.scheda-testo .nome { font-family: var(--serif); font-weight: 700; font-size: 26px; line-height: 1.15; }
+.scheda-testo .geo { font-size: 15px; }
+.scheda:hover .nome { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+
+.scheda.chiusa .ritratto { background: var(--viola); color: var(--carta); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; }
+.scheda.chiusa .ritratto .num { color: var(--carta); font-size: 56px; }
+.scheda.chiusa .filo { background: var(--malva); }
+.scheda.chiusa .etichetta { color: var(--grigio); }
+
+/* Programma / info */
+.in-arrivo { font-family: var(--geo); font-size: 19px; line-height: 1.55; max-width: 640px; margin: 0; }
+
+/* Pagina relatore */
+.indietro { display: inline-flex; align-items: center; min-height: 44px; margin-top: 24px; font-weight: 700; font-size: 15px; text-decoration: none; }
+.profilo { margin-top: 24px; display: grid; grid-template-columns: minmax(260px, 440px) 14px minmax(0, 1fr); gap: 56px; align-items: stretch; }
+.profilo .ritratto { aspect-ratio: 4 / 5; }
+.profilo .ritratto img { filter: none; }
+.profilo .filo { height: 14px; }
+.profilo .barra-v { width: 14px; }
+.profilo-testo { display: flex; flex-direction: column; gap: 24px; min-width: 0; }
+.profilo-testo .etichetta { font-size: 14px; letter-spacing: 0.12em; color: var(--viola); }
+.profilo-testo h1 { margin: 0; font-family: var(--serif); font-weight: 900; font-size: clamp(46px, 6vw, 92px); line-height: 0.95; letter-spacing: -0.02em; }
+.qualifica { margin: 0; font-size: 20px; font-weight: 600; }
+.bio { margin: 0; font-family: var(--geo); font-size: 19px; line-height: 1.6; max-width: 640px; }
+.intervento { border-top: 1px solid var(--linea); padding-top: 20px; display: flex; flex-direction: column; gap: 6px; }
+.intervento .etichetta { color: var(--grigio); }
+.intervento .serif { font-weight: 700; font-size: 28px; }
+.intervento .geo { font-size: 16px; }
+.collegamenti { display: flex; flex-wrap: wrap; gap: 4px 28px; font-weight: 700; font-size: 15px; }
+.collegamenti a { padding: 12px 0; }
+.credito { font-size: 12px; color: var(--grigio); margin-top: 8px; }
+
+.progetti { margin-top: 96px; }
+.progetti-griglia { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 40px 32px; list-style: none; margin: 0; padding: 0; }
+.progetto { display: flex; flex-direction: column; gap: 12px; }
+.progetto .foto { width: 100%; aspect-ratio: 4 / 3; background: var(--pietra); overflow: hidden; display: flex; align-items: center; justify-content: center; }
+.progetto .foto img { width: 100%; height: 100%; object-fit: cover; }
+.progetto h3 { margin: 4px 0 0; font-family: var(--serif); font-weight: 700; font-size: 24px; }
+.progetto .luogo { font-size: 15px; font-weight: 600; }
+.progetto p { margin: 0; font-family: var(--geo); font-size: 16px; line-height: 1.5; }
+
+.naviga { margin-top: 96px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; border-top: 1px solid var(--linea); padding-top: 16px; }
+.naviga a { color: var(--inchiostro); font-weight: 700; font-size: 16px; text-decoration: none; padding: 12px 0; }
+.naviga a:hover { color: var(--viola); }
+
+@media (max-width: 860px) {
+  .profilo { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .profilo > .barra-v { display: none; }
+}
+
+/* Piede */
+.piede { background: var(--inchiostro); color: var(--carta); border-top: var(--barra) solid var(--viola); }
+.piede .wrap { display: flex; flex-wrap: wrap; gap: 32px 48px; justify-content: space-between; padding-top: 56px; padding-bottom: 56px; }
+.piede .serif { font-weight: 900; font-size: 32px; display: block; }
+.piede .geo { color: #D8D3CB; font-size: 16px; }
+.piede .col { display: flex; flex-direction: column; gap: 8px; }
+.piede a { color: var(--carta); font-weight: 700; }
+.segnaposto-testo { color: var(--grigio); }
+.piede .segnaposto-testo { color: #A9A39A; }
