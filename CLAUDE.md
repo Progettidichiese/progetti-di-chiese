@@ -48,7 +48,8 @@ La riga con id "00" è l'esempio del modello e viene ignorata.
 - Al passaggio del mouse foto e testi delle schede, link e pulsanti si ingrandiscono leggermente (solo dispositivi con mouse, mai con riduci movimento).
 - Pagina relatore: in alto copertina orizzontale grande = immagine del progetto con ordine 1 (con didascalia). Sotto, barra lime che passa sotto il ritratto (piccolo, sovrapposto alla copertina) e scorrendo esce verso destra; nessuna barra viola su questa pagina.
 - Comparsa morbida allo scorrimento (dissolvenza + leggero sollevamento, a cascata) per schede relatori, organizzatori, progetti e titoli di sezione; classe "anima" aggiunta in <head> per evitare lampeggi.
-- La pagina relatore si apre sempre dall alto.
+- La pagina relatore si apre sempre dall alto (scrollTo + scrollIntoView anche dentro finestre/iframe).
+- style.css è richiamato con ?v=<hash> perché GitHub Pages fa tenere ai browser copie vecchie per circa 10 minuti (non in ANTEPRIMA).
 - Titolo "Progetti di chiese": interlinea >= 1.16 (1.24 su telefono) perché la g di Progetti non tocchi la h di chiese.
 - Font ufficiali: Bodoni 72 / Bodoni URW (titoli), ITC Avant Garde Gothic Pro (testo), Neue Haas Grotesk (maiuscoletti, etichette).
   Per ora sostituti open source ospitati sul sito (src/pubblici/fonts, licenza OFL): Bodoni Moda, Questrial, Inter Tight. Quando arriva il kit Adobe Fonts

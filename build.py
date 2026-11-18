@@ -17,6 +17,9 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).parent
+# versione del foglio di stile: cambia a ogni modifica, così i browser non usano una copia vecchia
+import hashlib
+VERSIONE_CSS = hashlib.sha1((Path(__file__).parent / "src" / "style.css").read_bytes()).hexdigest()[:8]
 OUT = ROOT / "_site"
 PRIV = ROOT / "data" / "privato"
 MESI = ["gennaio", "febbraio", "marzo", "aprile", "maggio", "giugno", "luglio",
@@ -69,7 +72,7 @@ def testa(sito, titolo, base, descrizione=""):
 <meta property="og:description" content="{e(descrizione or sito['sottotitolo'])}">
 {'<meta name="robots" content="noindex, nofollow">' if sito.get('in_costruzione') else ''}
 <link rel="preload" href="{base}fonts/bodoni-moda-latin-standard-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="{base}style.css">
+<link rel="stylesheet" href="{base}style.css{"" if IDX else "?v=" + VERSIONE_CSS}">
 <script>if ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("anima");</script>
 </head>
 <body>
@@ -337,7 +340,15 @@ def pagina_relatore(sito, r, svelati):
 </div>
 <script>
 if ("scrollRestoration" in history) history.scrollRestoration = "manual";
-if (!location.hash) window.scrollTo(0, 0);
+function inCima() {{
+  if (location.hash) return;
+  window.scrollTo(0, 0);
+  /* anche quando la pagina è mostrata dentro un'altra finestra (es. anteprima) */
+  try {{ document.body.scrollIntoView({{ block: "start" }}); }} catch (err) {{}}
+}}
+inCima();
+window.addEventListener("load", inCima);
+window.addEventListener("pageshow", inCima);
 (function () {{
   var c = document.querySelector(".copertina"), b = c && c.querySelector(".copertina-barra");
   if (!b || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
