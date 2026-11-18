@@ -16,6 +16,12 @@ Chi lavora al sito: comunica in italiano, gli utenti non sono sviluppatori.
 - Pubblicazione: `.github/workflows/pubblica.yml` → GitHub Pages, a ogni push su `main`
   e ogni giorno alle 05:05 UTC (06:05 in Italia). Si può lanciare a mano da Actions → "Run workflow".
 
+## Fase di costruzione
+- `data/sito.json` → `"in_costruzione": true` aggiunge noindex e un robots.txt che blocca i motori di ricerca.
+  Al lancio: mettere `false` e collegare il dominio (CNAME). Il dominio NON va collegato prima del lancio.
+- Anteprima privata per gli organizzatori: artifact claude.ai "Progetti di chiese — anteprima privata del sito",
+  generato con `ANTEPRIMA=1 python3 build.py` (link espliciti a index.html) e ripubblicato a ogni modifica.
+
 ## Riservatezza dei relatori futuri (IMPORTANTE)
 Il repository è pubblico (GitHub Pages gratuito). I dati veri non vanno MAI committati in chiaro:
 - `data/privato/` è in `.gitignore`.

@@ -22,6 +22,8 @@ MESI = ["gennaio", "febbraio", "marzo", "aprile", "maggio", "giugno", "luglio",
         "agosto", "settembre", "ottobre", "novembre", "dicembre"]
 
 e = lambda s: html.escape(str(s or ""), quote=True)
+# ANTEPRIMA=1: link espliciti a index.html, per l'anteprima privata su claude.ai
+IDX = "index.html" if os.environ.get("ANTEPRIMA") else ""
 
 
 def data_it(d):
@@ -64,6 +66,7 @@ def testa(sito, titolo, base, descrizione=""):
 <meta name="description" content="{e(descrizione or sito['sottotitolo'])}">
 <meta property="og:title" content="{e(titolo)}">
 <meta property="og:description" content="{e(descrizione or sito['sottotitolo'])}">
+{'<meta name="robots" content="noindex, nofollow">' if sito.get('in_costruzione') else ''}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400..900&amp;family=Inter+Tight:wght@400;500;600;700&amp;family=Questrial&amp;display=swap">
@@ -72,11 +75,11 @@ def testa(sito, titolo, base, descrizione=""):
 <body>
 <header class="testata">
 <div class="wrap">
-<a class="marchio" href="{base}"><span class="logo-polimi">[Logo Polimi]</span><span class="serif">{e(sito['titolo'])}</span></a>
+<a class="marchio" href="{base}{IDX}"><span class="logo-polimi">[Logo Polimi]</span><span class="serif">{e(sito['titolo'])}</span></a>
 <nav class="menu" aria-label="Principale">
-<a href="{base}#relatori">Relatori</a>
-<a href="{base}#programma">Programma</a>
-<a href="{base}#info">Info</a>
+<a href="{base}{IDX}#relatori">Relatori</a>
+<a href="{base}{IDX}#programma">Programma</a>
+<a href="{base}{IDX}#info">Info</a>
 {f'<a class="ig" href="{e(sito["instagram_url"])}">Instagram ↗</a>' if sito.get('instagram_url') else ''}
 </nav>
 </div>
@@ -119,7 +122,7 @@ def scheda(r, aperto, base):
     nome = f"{r.get('nome', '')} {r.get('cognome', '')}".strip()
     foto = img_tag(r.get("foto"), f"Ritratto di {nome}", base) or \
         f'<div class="segnaposto"><span class="etichetta segnaposto-testo">[Foto]</span><span class="num">{num}</span></div>'
-    return f"""<li><a class="scheda" href="{base}relatori/{num}/">
+    return f"""<li><a class="scheda" href="{base}relatori/{num}/{IDX}">
 <div class="ritratto">{foto}</div>
 <div class="filo"></div>
 <div class="scheda-testo"><span class="etichetta">{e(r.get('ruolo'))}</span><span class="nome">{e(nome)}</span><span class="geo">Progetti e intervento →</span></div>
@@ -192,7 +195,7 @@ def pagina_relatore(sito, r, svelati):
 </li>""" for p in r["progetti"])
     return testa(sito, f"{nome} — {sito['titolo']}", base, f"{r.get('qualifica', '')}. {sito['titolo']}, {sito['date']}.") + f"""
 <div class="wrap sezione">
-<a class="indietro" href="{base}#relatori">← Tutti i relatori</a>
+<a class="indietro" href="{base}{IDX}#relatori">← Tutti i relatori</a>
 <article>
 <div class="profilo">
 <div><div class="ritratto">{foto}</div><div class="filo"></div>{f'<p class="credito">{e(r["credito_foto"])}</p>' if r.get('credito_foto') else ''}</div>
@@ -213,8 +216,8 @@ def pagina_relatore(sito, r, svelati):
 {f'<section class="progetti"><div class="sezione-testa"><h2>Progetti</h2></div><ul class="progetti-griglia">{progetti}</ul></section>' if r['progetti'] else ''}
 </article>
 <nav class="naviga" aria-label="Altri relatori">
-{f'<a href="{base}relatori/{prec["id"]}/">← {e(prec.get("nome"))} {e(prec.get("cognome"))}</a>' if prec else '<span></span>'}
-{f'<a href="{base}relatori/{succ["id"]}/">{e(succ.get("nome"))} {e(succ.get("cognome"))} →</a>' if succ else '<span></span>'}
+{f'<a href="{base}relatori/{prec["id"]}/{IDX}">← {e(prec.get("nome"))} {e(prec.get("cognome"))}</a>' if prec else '<span></span>'}
+{f'<a href="{base}relatori/{succ["id"]}/{IDX}">{e(succ.get("nome"))} {e(succ.get("cognome"))} →</a>' if succ else '<span></span>'}
 </nav>
 </div>
 """ + piede(sito)
@@ -229,6 +232,8 @@ def main():
     (OUT / "img").mkdir(parents=True)
     shutil.copy(ROOT / "src" / "style.css", OUT / "style.css")
     (OUT / ".nojekyll").write_text("")
+    # sito in costruzione: niente motori di ricerca
+    (OUT / "robots.txt").write_text("User-agent: *\nDisallow: /\n" if sito.get("in_costruzione") else "User-agent: *\nAllow: /\n")
     if (ROOT / "CNAME").exists():
         shutil.copy(ROOT / "CNAME", OUT / "CNAME")
     for f in (ROOT / "src" / "pubblici").glob("*") if (ROOT / "src" / "pubblici").exists() else []:
