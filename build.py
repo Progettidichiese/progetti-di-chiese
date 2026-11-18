@@ -12,6 +12,7 @@ import html
 import json
 import os
 import shutil
+import urllib.parse
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -75,8 +76,10 @@ def testa(sito, titolo, base, descrizione=""):
 <div class="wrap">
 <a class="marchio" href="{base}{IDX}"><span class="logo-polimi">[Logo Polimi]</span><span class="serif">{e(sito['titolo'])}</span></a>
 <nav class="menu" aria-label="Principale">
+<a href="{base}{IDX}#organizzatori">Organizzatori</a>
 <a href="{base}{IDX}#relatori">Relatori</a>
 <a href="{base}{IDX}#programma">Programma</a>
+<a href="{base}{IDX}#come-arrivare">Come arrivare</a>
 <a href="{base}{IDX}#info">Info</a>
 {f'<a class="ig" href="{e(sito["instagram_url"])}">Instagram ↗</a>' if sito.get('instagram_url') else ''}
 </nav>
@@ -127,10 +130,26 @@ def scheda(r, aperto, base):
 </a></li>"""
 
 
+def scheda_organizzatore(o, base):
+    foto = (f'<img src="{base}organizzatori/{e(o["foto"])}" alt="Ritratto di {e(o["nome"])}" loading="lazy">' if o.get("foto")
+            else '<div class="segnaposto"><span class="etichetta segnaposto-testo">[Foto]</span></div>')
+    return f"""<li class="organizzatore">
+<div class="ritratto">{foto}</div>
+<div class="filo"></div>
+<div class="organizzatore-testo">
+<span class="etichetta">{e(o.get('ruolo')) or '[Ruolo, dipartimento]'}</span>
+<h3 class="serif">{e(o['nome'])}</h3>
+<p class="geo">{e(o.get('bio')) or '[Biografia breve, 4–6 righe.]'}</p>
+</div>
+</li>"""
+
+
 def home(sito, relatori, svelati, oggi_):
     base = "./"
     prossimo = next((r for r in relatori if r["data"] > oggi_), None)
-    curatori = "".join(f"<li>{e(c)}</li>" for c in sito["curatori"])
+    organizzatori = "\n".join(scheda_organizzatore(o, base) for o in sito.get("organizzatori", []))
+    luogo = sito.get("luogo", {})
+    q = urllib.parse.quote_plus(luogo.get("mappa_query", sito["sede"]))
     schede = "\n".join(scheda(r, r in svelati, base) for r in relatori)
     box = (f'<span class="serif">{data_it(prossimo["data"])}</span>' if prossimo
            else '<span class="serif">Tutti annunciati</span>')
@@ -153,9 +172,14 @@ def home(sito, relatori, svelati, oggi_):
 <p>{e(sito['presentazione'])}</p>
 </div>
 <aside class="presentazione-lato">
-<div class="curatori"><h2 class="serif"><span class="evidenzia">a cura di</span></h2><ul>{curatori}</ul></div>
 <div class="prossimo"><span class="etichetta">{'Prossimo relatore' if prossimo else 'Relatori'}</span>{box}<span class="geo">{len(svelati)} di {len(relatori)} relatori annunciati</span></div>
 </aside>
+</section>
+<section class="wrap sezione" id="organizzatori">
+<div class="sezione-testa"><h2>Organizzatori</h2><p>Il convegno è a cura di</p></div>
+<ul class="organizzatori">
+{organizzatori}
+</ul>
 </section>
 <section class="wrap sezione" id="relatori">
 <div class="sezione-testa"><h2>Relatori</h2><p>Un nuovo nome ogni settimana, insieme al post su Instagram</p></div>
@@ -167,6 +191,46 @@ def home(sito, relatori, svelati, oggi_):
 <div class="sezione-testa"><h2>Programma</h2></div>
 <p class="in-arrivo">[Il programma delle due giornate sarà pubblicato qui.]</p>
 </section>
+<section class="wrap sezione" id="come-arrivare">
+<div class="sezione-testa"><h2>Come arrivare</h2><p>{e(sito['date'])}</p></div>
+<div class="arrivo">
+<div class="arrivo-testo">
+<p class="arrivo-aula serif">{e(sito['aula'])}</p>
+<p class="arrivo-dove"><strong>{e(sito['sede'])}</strong><br>{e(luogo.get('campus'))} · {e(luogo.get('edificio'))}<br>{e(luogo.get('indirizzo'))}</p>
+<div class="arrivo-mezzi">
+<span class="etichetta">In metropolitana</span>
+<p>{e(luogo.get('metro'))}</p>
+</div>
+<div class="collegamenti">
+<a href="https://www.google.com/maps/dir/?api=1&amp;destination={q}">Indicazioni stradali ↗</a>
+<a href="https://www.google.com/maps/search/?api=1&amp;query={q}">Apri in Google Maps ↗</a>
+</div>
+</div>
+<div class="mappa" data-src="https://www.google.com/maps?q={q}&amp;z=17&amp;output=embed">
+<div class="mappa-copertina">
+<svg aria-hidden="true" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+<span class="serif">Piazza Leonardo da Vinci 32</span>
+<button type="button" class="mappa-carica">Mostra la mappa</button>
+<span class="mappa-nota">La mappa è fornita da Google: caricandola, Google riceve alcuni dati di navigazione.</span>
+</div>
+</div>
+</div>
+</section>
+<script>
+(function () {{
+  var m = document.querySelector(".mappa");
+  if (!m) return;
+  m.querySelector(".mappa-carica").addEventListener("click", function () {{
+    var f = document.createElement("iframe");
+    f.src = m.getAttribute("data-src");
+    f.title = "Mappa: {e(sito['aula'])}, {e(sito['sede'])}";
+    f.loading = "lazy";
+    f.referrerPolicy = "no-referrer-when-downgrade";
+    m.innerHTML = "";
+    m.appendChild(f);
+  }});
+}})();
+</script>
 <script>
 (function () {{
   var ap = document.querySelector(".apertura");

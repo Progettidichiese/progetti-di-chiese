@@ -5,9 +5,38 @@
   "date": "18–19 marzo 2027",
   "sede": "Politecnico di Milano",
   "aula": "Aula “Osvaldo De Donato”",
-  "tipo": ["Convegno internazionale", "Giornate di studio"],
-  "curatori": ["Francesca Daprà", "Emilio Faroldi", "Maria Pilar Vettori"],
+  "tipo": [
+    "Convegno internazionale",
+    "Giornate di studio"
+  ],
   "presentazione": "Il convegno internazionale e le giornate di studio propongono una riflessione sull’architettura contemporanea delle chiese e dei complessi parrocchiali, ponendo al centro l’opera costruita. Le testimonianze dei progettisti e i contributi interdisciplinari costituiscono il nucleo di un’iniziativa volta ad alimentare il dibattito sul progetto e sulla realizzazione dei luoghi di culto, quali espressioni primarie di un’architettura del tempo, dell’ascolto e della comunità.",
+  "organizzatori": [
+    {
+      "nome": "Francesca Daprà",
+      "ruolo": "",
+      "bio": "",
+      "foto": ""
+    },
+    {
+      "nome": "Emilio Faroldi",
+      "ruolo": "",
+      "bio": "",
+      "foto": ""
+    },
+    {
+      "nome": "Maria Pilar Vettori",
+      "ruolo": "",
+      "bio": "",
+      "foto": ""
+    }
+  ],
+  "luogo": {
+    "campus": "Campus Leonardo",
+    "edificio": "Edificio 3, piano terra",
+    "indirizzo": "Piazza Leonardo da Vinci 32, 20133 Milano",
+    "metro": "Metro M2 (linea verde), fermata Piola: uscita di sinistra, via D’Ovidio fino a via Spinoza, poi attraversare via Bonardi fino a piazza Leonardo da Vinci.",
+    "mappa_query": "Politecnico di Milano Edificio 3, Piazza Leonardo da Vinci 32, 20133 Milano"
+  },
   "instagram_url": "",
   "instagram_nome": "",
   "email": "",
