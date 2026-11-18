@@ -260,6 +260,18 @@ def pagina_relatore(sito, r, svelati):
     succ = svelati[i + 1] if i < len(svelati) - 1 else None
     foto = img_tag(r.get("foto"), f"Ritratto di {nome}", base) or \
         '<div class="segnaposto"><span class="etichetta segnaposto-testo">[Foto del relatore]</span></div>'
+    # copertina: immagine del primo progetto (ordine 1); senza immagine, un segnaposto
+    p1 = r["progetti"][0] if r["progetti"] else {}
+    cop_img = img_tag(p1.get("immagine"), p1.get("titolo") or nome, base)
+    didascalia = " · ".join(x for x in [str(p1.get("titolo") or ""), ", ".join(y for y in [str(p1.get("luogo") or ""), str(p1.get("anno") or "")] if y)] if x)
+    credito_cop = f' <span class="credito">{e(p1["credito_immagine"])}</span>' if p1.get("credito_immagine") else ""
+    didasc_html = f'<figcaption class="wrap"><span>{e(didascalia)}</span>{credito_cop}</figcaption>' if didascalia else ""
+    segnaposto_cop = '<span class="etichetta segnaposto-testo">[Immagine di copertina: il primo progetto della lista]</span>'
+    copertina = f"""<figure class="copertina">
+<div class="copertina-img">{cop_img or segnaposto_cop}</div>
+<div class="copertina-barra" aria-hidden="true"></div>
+{didasc_html}
+</figure>"""
     quando = " · ".join(x for x in [r.get("giorno_intervento"), r.get("orario")] if x)
     link = []
     if r.get("sito_web"):
@@ -274,11 +286,12 @@ def pagina_relatore(sito, r, svelati):
 {f'<span class="credito">{e(p["credito_immagine"])}</span>' if p.get('credito_immagine') else ''}
 </li>""" for p in r["progetti"])
     return testa(sito, f"{nome} — {sito['titolo']}", base, f"{r.get('qualifica', '')}. {sito['titolo']}, {sito['date']}.") + f"""
+<div class="wrap"><a class="indietro" href="{base}{IDX}#relatori">← Tutti i relatori</a></div>
+{copertina}
 <div class="wrap sezione">
-<a class="indietro" href="{base}{IDX}#relatori">← Tutti i relatori</a>
 <article>
 <div class="profilo">
-<div><div class="ritratto">{foto}</div><div class="filo"></div>{f'<p class="credito">{e(r["credito_foto"])}</p>' if r.get('credito_foto') else ''}</div>
+<div class="profilo-foto"><div class="ritratto">{foto}</div><div class="filo"></div>{f'<p class="credito">{e(r["credito_foto"])}</p>' if r.get('credito_foto') else ''}</div>
 <div class="barra-v" aria-hidden="true"></div>
 <div class="profilo-testo">
 <span class="etichetta">Relatore {r['id']} · {e(r.get('ruolo'))}</span>
