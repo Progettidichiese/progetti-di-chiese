@@ -67,9 +67,7 @@ def testa(sito, titolo, base, descrizione=""):
 <meta property="og:title" content="{e(titolo)}">
 <meta property="og:description" content="{e(descrizione or sito['sottotitolo'])}">
 {'<meta name="robots" content="noindex, nofollow">' if sito.get('in_costruzione') else ''}
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400..900&amp;family=Inter+Tight:wght@400;500;600;700&amp;family=Questrial&amp;display=swap">
+<link rel="preload" href="{base}fonts/bodoni-moda-latin-standard-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{base}style.css">
 </head>
 <body>
@@ -132,32 +130,32 @@ def scheda(r, aperto, base):
 def home(sito, relatori, svelati, oggi_):
     base = "./"
     prossimo = next((r for r in relatori if r["data"] > oggi_), None)
-    curatori = "".join(f'<span class="geo">{e(c)}</span>' for c in sito["curatori"])
-    tipo = "<br>".join(e(t.upper()) for t in sito["tipo"])
+    curatori = "".join(f"<li>{e(c)}</li>" for c in sito["curatori"])
     schede = "\n".join(scheda(r, r in svelati, base) for r in relatori)
     box = (f'<span class="serif">{data_it(prossimo["data"])}</span>' if prossimo
            else '<span class="serif">Tutti annunciati</span>')
     return testa(sito, f"{sito['titolo']} — {sito['sottotitolo']}", base, sito["presentazione"][:155]) + f"""
-<section class="wrap apertura" aria-label="Presentazione">
-<div></div>
+<section class="apertura" aria-label="Presentazione">
 <div class="barra-v" aria-hidden="true"></div>
-<div class="titolo">
-<span class="data-grande evidenzia">{e(sito['date'])}</span>
-<span class="sede">{e(sito['sede'].upper())}</span>
-<span class="aula">{e(sito['aula'])}</span>
-<span class="tipo">{tipo}</span>
+<div class="apertura-corpo">
+<p class="occhiello">{'<span class="sep" aria-hidden="true"> · </span>'.join(f'<span>{e(t)}</span>' for t in sito['tipo'])}</p>
+<p class="data-grande"><span class="evidenzia">{e(sito['date'])}</span></p>
+<p class="luogo"><strong>{e(sito['sede'])}</strong><span class="sep" aria-hidden="true"> · </span><span class="geo">{e(sito['aula'])}</span></p>
 <h1>Progetti<br>di chiese</h1>
 <div class="barra-o" aria-hidden="true"></div>
 <p class="sottotitolo">{e(sito['sottotitolo'])}</p>
+<a class="scorri" href="{base}{IDX}#relatori">Scopri i relatori <span aria-hidden="true">↓</span></a>
 </div>
 </section>
-<section class="wrap intro">
-<div class="curatori"><span class="serif evidenzia">a cura di</span>{curatori}</div>
-<div class="barra-v" aria-hidden="true"></div>
-<div class="intro-corpo">
+<section class="wrap presentazione" aria-label="Il convegno">
+<div class="presentazione-testo">
+<h2 class="etichetta">Il convegno</h2>
 <p>{e(sito['presentazione'])}</p>
-<div class="prossimo"><span class="etichetta">{'Prossimo relatore' if prossimo else 'Relatori'}</span>{box}<span class="geo">{len(svelati)} di {len(relatori)} relatori annunciati</span></div>
 </div>
+<aside class="presentazione-lato">
+<div class="curatori"><h2 class="serif"><span class="evidenzia">a cura di</span></h2><ul>{curatori}</ul></div>
+<div class="prossimo"><span class="etichetta">{'Prossimo relatore' if prossimo else 'Relatori'}</span>{box}<span class="geo">{len(svelati)} di {len(relatori)} relatori annunciati</span></div>
+</aside>
 </section>
 <section class="wrap sezione" id="relatori">
 <div class="sezione-testa"><h2>Relatori</h2><p>Un nuovo nome ogni settimana, insieme al post su Instagram</p></div>
@@ -169,6 +167,23 @@ def home(sito, relatori, svelati, oggi_):
 <div class="sezione-testa"><h2>Programma</h2></div>
 <p class="in-arrivo">[Il programma delle due giornate sarà pubblicato qui.]</p>
 </section>
+<script>
+(function () {{
+  var ap = document.querySelector(".apertura");
+  if (!ap || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var v = ap.querySelector(".barra-v"), o = ap.querySelector(".barra-o"), att = false;
+  function aggiorna() {{
+    att = false;
+    var p = Math.min(1, Math.max(0, window.scrollY / (ap.offsetHeight * 0.7)));
+    var k = p * p * (3 - 2 * p);
+    v.style.transform = "translate3d(0," + (-k * 100) + "%,0)";
+    o.style.transform = "translate3d(" + (-k * 100) + "%,0,0)";
+  }}
+  window.addEventListener("scroll", function () {{ if (!att) {{ att = true; requestAnimationFrame(aggiorna); }} }}, {{ passive: true }});
+  window.addEventListener("resize", aggiorna);
+  aggiorna();
+}})();
+</script>
 """ + piede(sito)
 
 
@@ -236,8 +251,8 @@ def main():
     (OUT / "robots.txt").write_text("User-agent: *\nDisallow: /\n" if sito.get("in_costruzione") else "User-agent: *\nAllow: /\n")
     if (ROOT / "CNAME").exists():
         shutil.copy(ROOT / "CNAME", OUT / "CNAME")
-    for f in (ROOT / "src" / "pubblici").glob("*") if (ROOT / "src" / "pubblici").exists() else []:
-        shutil.copy(f, OUT / f.name)
+    if (ROOT / "src" / "pubblici").exists():
+        shutil.copytree(ROOT / "src" / "pubblici", OUT, dirs_exist_ok=True)
     (OUT / "index.html").write_text(home(sito, relatori, svelati, oggi_), "utf-8")
     immagini = PRIV / "immagini"
     for r in svelati:

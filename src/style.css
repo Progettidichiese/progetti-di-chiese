@@ -1,6 +1,13 @@
 /* Progetti di chiese — stile del sito
-   Font sostitutivi (Google Fonts) in attesa del kit Adobe Fonts:
+   Font sostitutivi open source (OFL), ospitati sul sito, in attesa del kit Adobe Fonts:
    Bodoni Moda ≈ Bodoni 72 / Bodoni URW · Questrial ≈ ITC Avant Garde Gothic · Inter Tight ≈ Neue Haas Grotesk */
+
+@font-face { font-family: "Bodoni Moda"; src: url("fonts/bodoni-moda-latin-standard-normal.woff2") format("woff2"); font-weight: 400 900; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Bodoni Moda"; src: url("fonts/bodoni-moda-latin-ext-standard-normal.woff2") format("woff2"); font-weight: 400 900; font-display: swap; unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: "Questrial"; src: url("fonts/questrial-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Questrial"; src: url("fonts/questrial-latin-ext-400-normal.woff2") format("woff2"); font-weight: 400; font-display: swap; unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1E00-1E9F, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: "Inter Tight"; src: url("fonts/inter-tight-latin-wght-normal.woff2") format("woff2"); font-weight: 100 900; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Inter Tight"; src: url("fonts/inter-tight-latin-ext-wght-normal.woff2") format("woff2"); font-weight: 100 900; font-display: swap; unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1E00-1E9F, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
 
 :root {
   --carta: #FCFBF8;
@@ -47,40 +54,59 @@ a:hover { color: var(--viola-scuro); }
 .menu a:hover { color: var(--viola); }
 .menu a.ig { color: var(--viola); }
 
-/* Apertura con la croce */
-.apertura { display: grid; grid-template-columns: minmax(180px, 260px) var(--barra) minmax(0, 1fr); column-gap: 56px; }
-.curatori { display: flex; flex-direction: column; align-items: flex-end; text-align: right; padding-top: 72px; gap: 6px; }
-.curatori .serif { font-weight: 900; font-size: 26px; margin-bottom: 8px; }
-.curatori span.geo { font-size: 19px; }
-.barra-v { background: var(--viola); }
-.apertura .titolo { padding: 64px 0 56px; display: flex; flex-direction: column; align-items: flex-end; text-align: right; min-width: 0; }
-.data-grande { font-family: var(--serif); font-weight: 900; font-size: 44px; letter-spacing: -0.01em; }
-.sede { margin-top: 14px; font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
-.aula { font-family: var(--geo); font-size: 19px; }
-.tipo { margin-top: 32px; font-size: 22px; font-weight: 700; line-height: 1.3; letter-spacing: -0.01em; }
-.apertura h1 { margin: 40px 0 0; font-family: var(--serif); font-weight: 900; font-size: clamp(60px, 10vw, 156px); line-height: 0.92; letter-spacing: -0.025em; }
-.barra-o { align-self: stretch; height: var(--barra); background: var(--lime); margin: 28px 0 0 calc(-56px - var(--barra) - 66px); }
-.sottotitolo { margin: 28px 0 0; font-family: var(--serif); font-weight: 700; font-size: clamp(22px, 2.6vw, 38px); }
+/* Apertura: la croce (barra viola verticale + barra lime orizzontale), animata allo scorrimento */
+.apertura { position: relative; overflow: hidden; overflow: clip; min-height: calc(100svh - 73px); display: flex;
+  --x: max(20px, calc((100vw - 1280px) / 2 + 32px)); --spazio: clamp(22px, 4vw, 64px); --rientro: calc(var(--x) + var(--barra) + var(--spazio)); }
+.apertura .barra-v { position: absolute; top: 0; bottom: 0; left: var(--x); width: var(--barra); background: var(--viola); will-change: transform; }
+.apertura-corpo { width: 100%; max-width: calc(var(--rientro) + 1180px); display: flex; flex-direction: column; justify-content: center;
+  padding: clamp(40px, 9vh, 110px) clamp(20px, 5vw, 80px) clamp(48px, 9vh, 100px) var(--rientro); }
+.apertura p { margin: 0; }
+.occhiello { font-size: 14px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+.data-grande { margin-top: 18px !important; font-family: var(--serif); font-weight: 900; font-size: clamp(30px, 3.4vw, 50px); letter-spacing: -0.005em; line-height: 1.1; }
+.luogo { margin-top: 8px !important; font-size: clamp(16px, 1.4vw, 19px); }
+.luogo strong { font-weight: 700; text-transform: uppercase; letter-spacing: 0.02em; }
+.apertura h1 { margin: clamp(28px, 6vh, 64px) 0 0; font-family: var(--serif); font-weight: 900; font-variation-settings: "opsz" 96;
+  font-size: clamp(60px, 12vw, 196px); line-height: 1.16; letter-spacing: -0.005em; }
+.barra-o { height: var(--barra); background: var(--lime); margin-top: clamp(18px, 3.5vh, 36px);
+  margin-left: calc(-1 * var(--rientro)); width: calc(100% + var(--rientro)); will-change: transform; }
+.sottotitolo { margin-top: clamp(18px, 3vh, 30px) !important; font-family: var(--serif); font-weight: 700; font-size: clamp(22px, 2.4vw, 36px); line-height: 1.2; }
+.scorri { align-self: flex-start; margin-top: clamp(28px, 6vh, 64px); display: inline-flex; align-items: center; gap: 10px; min-height: 44px;
+  font-size: 14px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--inchiostro); text-decoration: none; }
+.scorri span { color: var(--viola); font-size: 18px; transition: transform .3s ease; }
+.scorri:hover { color: var(--viola); }
+.scorri:hover span { transform: translateY(4px); }
 
-.intro { display: grid; grid-template-columns: minmax(180px, 260px) var(--barra) minmax(0, 1fr); column-gap: 56px; margin-bottom: 88px; }
-.intro-corpo { padding: 0 0 40px; }
-.intro-corpo { grid-column: 3; display: flex; flex-wrap: wrap; gap: 40px; justify-content: space-between; align-items: flex-start; }
-.intro p { margin: 0; flex: 1 1 420px; font-family: var(--geo); font-size: 19px; line-height: 1.55; text-align: justify; hyphens: auto; }
-.prossimo { flex: 0 1 260px; display: flex; flex-direction: column; gap: 6px; padding: 22px 24px; background: var(--viola); color: var(--carta); }
-.prossimo .serif { font-weight: 900; font-size: 32px; }
+/* Presentazione */
+.presentazione { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(260px, 1fr); gap: 48px clamp(40px, 6vw, 96px); padding-top: 40px; padding-bottom: 112px; align-items: start; }
+.presentazione-testo h2 { margin: 0 0 18px; color: var(--viola); }
+.presentazione-testo p { margin: 0; font-family: var(--geo); font-size: clamp(18px, 1.5vw, 21px); line-height: 1.6; max-width: 68ch; }
+.presentazione-lato { display: flex; flex-direction: column; gap: 32px; }
+.curatori h2 { margin: 0 0 10px; font-weight: 900; font-size: 26px; }
+.curatori ul { list-style: none; margin: 0; padding: 0; font-family: var(--geo); font-size: 19px; line-height: 1.6; }
+.prossimo { display: flex; flex-direction: column; gap: 6px; padding: 22px 24px; background: var(--viola); color: var(--carta); }
+.prossimo .serif { font-weight: 900; font-size: 32px; line-height: 1.15; }
 .prossimo .geo { font-size: 15px; }
 
 @media (max-width: 860px) {
-  .apertura, .intro { grid-template-columns: var(--barra) minmax(0, 1fr); column-gap: 24px; }
-  .apertura > div:first-child { display: none; }
-  .apertura .titolo { padding: 40px 0 40px; }
-  .intro .curatori { grid-column: 2; grid-row: 2; align-items: flex-start; text-align: left; padding: 8px 0 40px; }
-  .intro .barra-v { grid-column: 1; grid-row: 1 / span 2; }
-  .intro-corpo { grid-row: 1; }
-  .barra-o { margin-left: calc(-24px - var(--barra) - 20px); }
-  .intro-corpo { grid-column: 2; }
-  .intro p { text-align: left; }
+  .presentazione { grid-template-columns: minmax(0, 1fr); padding-top: 24px; padding-bottom: 88px; }
+  .presentazione-lato { flex-direction: row; flex-wrap: wrap; align-items: flex-start; }
+  .presentazione-lato > * { flex: 1 1 240px; }
 }
+@media (max-width: 640px) {
+  :root { --barra: 10px; }
+  .apertura { min-height: auto; --x: 20px; --spazio: 20px; }
+  .apertura-corpo { padding-top: 48px; padding-bottom: 56px; }
+  .occhiello { font-size: 12px; }
+  .occhiello span:not(.sep), .luogo .geo, .luogo strong { display: block; }
+  .apertura .sep { display: none; }
+  .apertura h1 { line-height: 1.24; }
+  .testata .wrap { padding-top: 10px; padding-bottom: 6px; gap: 4px 16px; }
+  .logo-polimi { width: 92px; height: 36px; font-size: 9px; }
+  .marchio { gap: 12px; }
+  .marchio .serif { font-size: 19px; }
+  .menu { gap: 0 20px; font-size: 13px; }
+}
+@media (prefers-reduced-motion: reduce) { .scorri span { transition: none; } }
 
 /* Sezioni */
 .sezione { padding-bottom: 120px; }
