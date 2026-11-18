@@ -160,7 +160,7 @@ def home(sito, relatori, svelati, oggi_):
 <div class="apertura-corpo">
 <p class="occhiello">{'<span class="sep" aria-hidden="true"> · </span>'.join(f'<span>{e(t)}</span>' for t in sito['tipo'])}</p>
 <p class="data-grande"><span class="evidenzia">{e(sito['date'])}</span></p>
-<p class="luogo"><strong>{e(sito['sede'])}</strong><span class="sep" aria-hidden="true"> · </span><span class="geo">{e(sito['aula'])}</span></p>
+<p class="luogo"><strong>{e(sito['sede'])}</strong></p>
 <h1>Progetti<br>di chiese</h1>
 <div class="barra-o" aria-hidden="true"></div>
 <p class="sottotitolo">{e(sito['sottotitolo'])}</p>

@@ -44,6 +44,8 @@ La riga con id "00" è l'esempio del modello e viene ignorata.
 ## Grafica (dal save the date)
 - Colori: carta #FCFBF8, inchiostro #111111, viola #7B2560, lime #B2CC2A, malva #D3B6C9 (sottolineature).
 - Segno: croce formata da barra verticale viola e barra orizzontale lime. Nella home la croce si scompone scorrendo (viola verso l alto, lime verso sinistra) e si ricompone tornando su; disattivata con prefers-reduced-motion.
+- Apertura: sotto la data solo "Politecnico di Milano" in grassetto (l aula compare in Come arrivare).
+- Al passaggio del mouse foto e testi delle schede, link e pulsanti si ingrandiscono leggermente (solo dispositivi con mouse, mai con riduci movimento).
 - Titolo "Progetti di chiese": interlinea >= 1.16 (1.24 su telefono) perché la g di Progetti non tocchi la h di chiese.
 - Font ufficiali: Bodoni 72 / Bodoni URW (titoli), ITC Avant Garde Gothic Pro (testo), Neue Haas Grotesk (maiuscoletti, etichette).
   Per ora sostituti open source ospitati sul sito (src/pubblici/fonts, licenza OFL): Bodoni Moda, Questrial, Inter Tight. Quando arriva il kit Adobe Fonts
