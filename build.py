@@ -149,7 +149,8 @@ def home(sito, relatori, svelati, oggi_):
     prossimo = next((r for r in relatori if r["data"] > oggi_), None)
     organizzatori = "\n".join(scheda_organizzatore(o, base) for o in sito.get("organizzatori", []))
     luogo = sito.get("luogo", {})
-    q = urllib.parse.quote_plus(luogo.get("mappa_query", sito["sede"]))
+    coord = f'{luogo.get("lat")},{luogo.get("lng")}'
+    url_mappa = luogo.get("maps_url") or f"https://www.google.com/maps/search/?api=1&query={coord}"
     schede = "\n".join(scheda(r, r in svelati, base) for r in relatori)
     box = (f'<span class="serif">{data_it(prossimo["data"])}</span>' if prossimo
            else '<span class="serif">Tutti annunciati</span>')
@@ -202,11 +203,11 @@ def home(sito, relatori, svelati, oggi_):
 <p>{e(luogo.get('metro'))}</p>
 </div>
 <div class="collegamenti">
-<a href="https://www.google.com/maps/dir/?api=1&amp;destination={q}">Indicazioni stradali ↗</a>
-<a href="https://www.google.com/maps/search/?api=1&amp;query={q}">Apri in Google Maps ↗</a>
+<a href="https://www.google.com/maps/dir/?api=1&amp;destination={coord}">Indicazioni stradali ↗</a>
+<a href="{e(url_mappa)}">Apri in Google Maps ↗</a>
 </div>
 </div>
-<div class="mappa" data-src="https://www.google.com/maps?q={q}&amp;z=17&amp;output=embed">
+<div class="mappa" data-src="https://www.google.com/maps?q={coord}&amp;z=18&amp;output=embed">
 <div class="mappa-copertina">
 <svg aria-hidden="true" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
 <span class="serif">Piazza Leonardo da Vinci 32</span>

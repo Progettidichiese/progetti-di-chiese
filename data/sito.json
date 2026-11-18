@@ -35,7 +35,9 @@
     "edificio": "Edificio 3, piano terra",
     "indirizzo": "Piazza Leonardo da Vinci 32, 20133 Milano",
     "metro": "Metro M2 (linea verde), fermata Piola: uscita di sinistra, via D’Ovidio fino a via Spinoza, poi attraversare via Bonardi fino a piazza Leonardo da Vinci.",
-    "mappa_query": "Politecnico di Milano Edificio 3, Piazza Leonardo da Vinci 32, 20133 Milano"
+    "lat": 45.4776016,
+    "lng": 9.2275393,
+    "maps_url": "https://www.google.com/maps/place/Aula+Osvaldo+De+Donato/@45.4779669,9.2272647,197m/data=!3m1!1e3!4m14!1m7!3m6!1s0x4786c6f67dd11753:0x8e30fae1774a3377!2sPolitecnico+di+Milano!8m2!3d45.4781552!4d9.227272!16s%2Fg%2F11g_76wmz!3m5!1s0x4786c6f3eb037065:0xe93b960139d81bc4!8m2!3d45.4776016!4d9.2275393!16s%2Fg%2F1pycy1dl2"
   },
   "instagram_url": "",
   "instagram_nome": "",

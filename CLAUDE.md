@@ -16,6 +16,7 @@ Chi lavora al sito: comunica in italiano, gli utenti non sono sviluppatori.
 - Ordine della home: apertura · presentazione · Organizzatori · Relatori · Programma · Come arrivare · piede.
 - Mappa Google caricata solo al clic su "Mostra la mappa" (niente dati a Google senza azione del visitatore).
   Luogo verificato: Aula De Donato = Campus Leonardo, Edificio 3, piano terra, Piazza Leonardo da Vinci 32.
+  Coordinate esatte dell aula (45.4776016, 9.2275393) e link Google Maps fornito dagli organizzatori in `data/sito.json` → `luogo`.
 - Stile: `src/style.css`. File statici extra (favicon, logo): `src/pubblici/` (copiati nella radice del sito).
 - Pubblicazione: `.github/workflows/pubblica.yml` → GitHub Pages, a ogni push su `main`
   e ogni giorno alle 05:05 UTC (06:05 in Italia). Si può lanciare a mano da Actions → "Run workflow".
