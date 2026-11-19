@@ -20,7 +20,8 @@ Chi lavora al sito: comunica in italiano, gli utenti non sono sviluppatori.
 - Pagina separata `declaratoria/` (testo in `data/sito.json` → `declaratoria`, un elemento per paragrafo, *asterischi* = corsivo), raggiunta dal riquadro malva "Declaratoria →" sotto "Il convegno".
 - Pagina separata `iscrizione/` (voce di menu "Iscrizione" evidenziata): architetti con crediti (portale Ordine), pubblico esterno (sito Polimi, sezione convegni), studenti senza iscrizione.
   Link e numero di crediti in `data/sito.json` → `iscrizione`; finché sono vuoti i pulsanti mostrano "link in arrivo".
-- Mappa Google caricata solo al clic su "Mostra la mappa" (niente dati a Google senza azione del visitatore).
+- Mappa OpenStreetMap incorporata e mostrata subito (nessun cookie di profilazione, a differenza di Google Maps, che richiederebbe il consenso);
+  i pulsanti "Indicazioni stradali" e "Apri in Google Maps" aprono Google Maps in un'altra scheda.
   Luogo verificato: Aula De Donato = Campus Leonardo, Edificio 3, piano terra, Piazza Leonardo da Vinci 32.
   Coordinate esatte dell aula (45.4776016, 9.2275393) e link Google Maps fornito dagli organizzatori in `data/sito.json` → `luogo`.
 - Anteprima dei link condivisi (Open Graph): immagine `src/pubblici/condivisione.jpg` (1200×630, ritaglio della locandina);

@@ -297,6 +297,10 @@ def home(sito, relatori, svelati, oggi_):
     organizzatori = "\n".join(scheda_organizzatore(o, base) for o in sito.get("organizzatori", []))
     luogo = sito.get("luogo", {})
     coord = f'{luogo.get("lat")},{luogo.get("lng")}'
+    # mappa OpenStreetMap mostrata subito (niente cookie né profilazione, a differenza di Google Maps)
+    la, lo = float(luogo.get("lat", 0)), float(luogo.get("lng", 0))
+    osm_url = (f"https://www.openstreetmap.org/export/embed.html?bbox={lo-0.0045:.6f}%2C{la-0.0022:.6f}%2C{lo+0.0045:.6f}%2C{la+0.0022:.6f}"
+               f"&amp;layer=mapnik&amp;marker={la:.6f}%2C{lo:.6f}")
     url_mappa = luogo.get("maps_url") or f"https://www.google.com/maps/search/?api=1&query={coord}"
     schede = "\n".join(scheda(r, r in svelati, base) for r in relatori)
     box = (f'<span class="serif">{data_it(prossimo["data"])}</span>' if prossimo
@@ -357,31 +361,12 @@ def home(sito, relatori, svelati, oggi_):
 <a href="{e(url_mappa)}">Apri in Google Maps ↗</a>
 </div>
 </div>
-<div class="mappa" data-src="https://www.google.com/maps?q={coord}&amp;z=18&amp;output=embed">
-<div class="mappa-copertina">
-<svg aria-hidden="true" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
-<span class="serif">Piazza Leonardo da Vinci 32</span>
-<button type="button" class="mappa-carica">Mostra la mappa</button>
-<span class="mappa-nota">La mappa è fornita da Google: caricandola, Google riceve alcuni dati di navigazione.</span>
-</div>
+<div class="mappa">
+<iframe src="{osm_url}" title="Mappa: {e(sito['aula'])}, {e(sito['sede'])}, {e(luogo.get('indirizzo'))}" loading="lazy"></iframe>
+<a class="mappa-crediti" href="https://www.openstreetmap.org/?mlat={luogo.get('lat')}&amp;mlon={luogo.get('lng')}#map=18/{luogo.get('lat')}/{luogo.get('lng')}">© OpenStreetMap</a>
 </div>
 </div>
 </section>
-<script>
-(function () {{
-  var m = document.querySelector(".mappa");
-  if (!m) return;
-  m.querySelector(".mappa-carica").addEventListener("click", function () {{
-    var f = document.createElement("iframe");
-    f.src = m.getAttribute("data-src");
-    f.title = "Mappa: {e(sito['aula'])}, {e(sito['sede'])}";
-    f.loading = "lazy";
-    f.referrerPolicy = "no-referrer-when-downgrade";
-    m.innerHTML = "";
-    m.appendChild(f);
-  }});
-}})();
-</script>
 <script>
 (function () {{
   var ap = document.querySelector(".apertura");
