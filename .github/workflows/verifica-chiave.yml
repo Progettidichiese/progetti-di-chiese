@@ -1,0 +1,23 @@
+name: Verifica chiave dei dati
+
+# Controllo manuale: la chiave privata nel secret CHIAVE_PRIVATA_DATI apre ciò che la chiave pubblica chiude?
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  verifica:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prova di cifratura e decifratura
+        env:
+          CHIAVE_PRIVATA_DATI: ${{ secrets.CHIAVE_PRIVATA_DATI }}
+        run: |
+          mkdir -p data/privato && echo '{"relatori":[],"progetti":[]}' > data/privato/relatori.json
+          bash tools/cifra.sh cifra
+          rm -rf data/privato
+          bash tools/cifra.sh decifra
+          test -f data/privato/relatori.json && echo "OK: la chiave privata corrisponde alla chiave pubblica."
