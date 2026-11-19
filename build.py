@@ -29,7 +29,9 @@ MESI = ["gennaio", "febbraio", "marzo", "aprile", "maggio", "giugno", "luglio",
 
 e = lambda s: html.escape(str(s or ""), quote=True)
 # ANTEPRIMA=1: link espliciti a index.html, per l'anteprima privata su claude.ai
-IDX = "index.html" if os.environ.get("ANTEPRIMA") else ""
+IDX = "index.html" if (os.environ.get("ANTEPRIMA") or os.environ.get("LOCALE")) else ""
+# ANTEPRIMA: anteprima su Claude (niente Adobe Fonts, bloccato lì). LOCALE: copia da aprire sul computer, con Adobe Fonts
+SENZA_ADOBE = bool(os.environ.get("ANTEPRIMA"))
 
 
 def data_it(d):
@@ -73,9 +75,9 @@ def testa(sito, titolo, base, descrizione=""):
 <meta property="og:title" content="{e(titolo)}">
 <meta property="og:description" content="{e(descrizione or sito['sottotitolo'])}">
 {'<meta name="robots" content="noindex, nofollow">' if sito.get('in_costruzione') else ''}
-{"" if IDX else '<link rel="preconnect" href="https://use.typekit.net" crossorigin>' + chr(10) + '<link rel="stylesheet" href="https://use.typekit.net/' + ADOBE_KIT + '.css">'}
+{"" if SENZA_ADOBE else '<link rel="preconnect" href="https://use.typekit.net" crossorigin>' + chr(10) + '<link rel="stylesheet" href="https://use.typekit.net/' + ADOBE_KIT + '.css">'}
 <link rel="stylesheet" href="{base}style.css{"" if IDX else "?v=" + VERSIONE_CSS}">
-{'<style>.apertura h1{line-height:1.2}</style>' if IDX else ''}
+{'<style>.apertura h1{line-height:1.2}</style>' if SENZA_ADOBE else ''}
 <script>if ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("anima");</script>
 </head>
 <body>
