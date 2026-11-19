@@ -13,7 +13,9 @@ Chi lavora al sito: comunica in italiano, gli utenti non sono sviluppatori.
 - Dati: `data/privato/relatori.json` + `data/privato/immagini/` se esistono, altrimenti `data/demo.json` (prova).
 - Testi fissi del convegno (titolo, date, organizzatori con bio, luogo e indicazioni, contatti, Instagram): `data/sito.json`.
   Foto degli organizzatori (non riservate): `src/pubblici/organizzatori/<file>` + campo `foto`.
-- Ordine della home: apertura · presentazione · Organizzatori · Relatori · Programma · Come arrivare · piede.
+- Ordine della home: apertura · presentazione · Organizzatori (responsabili scientifici con foto, poi Comitato scientifico e Comitato organizzativo come elenchi di soli nomi) · Relatori · Programma · Come arrivare · piede.
+- Pagina separata `iscrizione/` (voce di menu "Iscrizione" evidenziata): architetti con crediti (portale Ordine), pubblico esterno (sito Polimi, sezione convegni), studenti senza iscrizione.
+  Link e numero di crediti in `data/sito.json` → `iscrizione`; finché sono vuoti i pulsanti mostrano "link in arrivo".
 - Mappa Google caricata solo al clic su "Mostra la mappa" (niente dati a Google senza azione del visitatore).
   Luogo verificato: Aula De Donato = Campus Leonardo, Edificio 3, piano terra, Piazza Leonardo da Vinci 32.
   Coordinate esatte dell aula (45.4776016, 9.2275393) e link Google Maps fornito dagli organizzatori in `data/sito.json` → `luogo`.

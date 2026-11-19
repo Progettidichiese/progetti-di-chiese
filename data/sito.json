@@ -30,6 +30,28 @@
       "foto": ""
     }
   ],
+  "comitato_scientifico": [
+    "Silvia Battaglia",
+    "Umberto Bordoni",
+    "Elisa Boeri",
+    "Francesca Daprà",
+    "Jesús Donaire García de Mora",
+    "Emilio Faroldi",
+    "Davide Fusari",
+    "Francesca Leto",
+    "Andrea Longhi",
+    "Marco Ruffini",
+    "Maria Pilar Vettori"
+  ],
+  "comitato_organizzativo": [
+    "Andrea Dechamps",
+    "Camilla Giussani"
+  ],
+  "iscrizione": {
+    "architetti_url": "",
+    "architetti_crediti": "",
+    "privati_url": ""
+  },
   "luogo": {
     "campus": "Campus Leonardo",
     "edificio": "Edificio 3, piano terra",

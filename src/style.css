@@ -143,6 +143,11 @@ a:hover { color: var(--viola-scuro); }
 .organizzatore-testo h3 { margin: 0; font-weight: 700; font-size: 28px; line-height: 1.15; }
 .organizzatore-testo p { margin: 6px 0 0; font-size: 16px; line-height: 1.55; }
 
+/* Comitati (solo nomi) */
+.comitato { margin-top: 88px; }
+.nomi { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0 32px; }
+.nomi li { font-family: var(--serif); font-weight: 700; font-size: 24px; line-height: 1.25; padding: 14px 0; border-bottom: 1px solid var(--linea); }
+
 /* Come arrivare */
 .arrivo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 40px clamp(32px, 5vw, 72px); align-items: stretch; }
 .arrivo-testo { display: flex; flex-direction: column; gap: 22px; }
@@ -161,6 +166,29 @@ a:hover { color: var(--viola-scuro); }
 .mappa-carica:hover { background: var(--viola); }
 .mappa-nota { max-width: 340px; font-size: 13px; color: var(--grigio); line-height: 1.45; }
 @media (max-width: 860px) { .arrivo { grid-template-columns: minmax(0, 1fr); } .mappa { min-height: 340px; } }
+
+/* Voce di menu Iscrizione */
+.menu a.menu-iscrizione { color: var(--carta); background: var(--viola); padding: 12px 16px; }
+.menu a.menu-iscrizione:hover { color: var(--carta); background: var(--viola-scuro); }
+
+/* Pagina Iscrizione */
+.pagina-testa { margin: 32px 0 64px; }
+.pagina-testa .etichetta { color: var(--viola); margin: 0; }
+.pagina-testa h1 { margin: 16px 0 0; font-family: var(--serif); font-weight: 900; font-size: clamp(56px, 9vw, 128px); line-height: 1.1; letter-spacing: -0.01em; }
+.barra-o-pagina { height: var(--barra); background: var(--lime); width: min(70%, 720px); margin: 20px 0 24px; }
+.pagina-testa .geo { margin: 0; font-size: clamp(18px, 1.6vw, 21px); max-width: 60ch; }
+.iscrizioni { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; }
+.iscrizione { display: flex; flex-direction: column; gap: 14px; padding: 28px 28px 32px; background: #F3F0EB; border-top: 10px solid var(--viola); }
+.iscrizione.studenti { border-top-color: var(--lime); }
+.iscrizione .etichetta { color: var(--viola); }
+.iscrizione h2 { margin: 0; font-weight: 900; font-size: 32px; line-height: 1.15; }
+.iscrizione p { margin: 0; font-size: 17px; line-height: 1.55; flex: 1; }
+.pulsante { align-self: flex-start; display: inline-flex; align-items: center; min-height: 48px; padding: 0 22px; background: var(--inchiostro); color: var(--carta); text-decoration: none;
+  font: 700 14px/1.2 var(--grot); letter-spacing: 0.06em; text-transform: uppercase; }
+.pulsante:hover { background: var(--viola); color: var(--carta); }
+.pulsante.secondario { background: transparent; color: var(--inchiostro); box-shadow: inset 0 0 0 2px var(--inchiostro); }
+.pulsante.secondario:hover { background: var(--inchiostro); color: var(--carta); }
+.pulsante.disattivo { background: #D9D4CC; color: var(--grigio); cursor: not-allowed; }
 
 /* Programma / info */
 .in-arrivo { font-family: var(--geo); font-size: 19px; line-height: 1.55; max-width: 640px; margin: 0; }
@@ -235,7 +263,7 @@ a:hover { color: var(--viola-scuro); }
   .ritratto, .progetto .foto { overflow: hidden; }
   .ritratto img, .ritratto .segnaposto, .ritratto svg, .ritratto > .num, .progetto .foto img, .progetto .foto > span,
   .scheda-testo, .organizzatore-testo, .progetto h3, .progetto .luogo, .profilo-testo h1,
-  .menu a, .marchio, .scorri, .collegamenti a, .naviga a, .indietro, .mappa-carica, .prossimo {
+  .menu a, .marchio, .scorri, .collegamenti a, .naviga a, .indietro, .mappa-carica, .prossimo, .pulsante {
     transition: transform .45s cubic-bezier(.2, .7, .2, 1), filter .4s ease, color .2s ease, background-color .2s ease;
   }
   .scheda-testo, .organizzatore-testo, .progetto h3, .progetto .luogo, .profilo-testo h1 { transform-origin: left center; }
@@ -245,6 +273,7 @@ a:hover { color: var(--viola-scuro); }
   .scheda:hover .scheda-testo, .organizzatore:hover .organizzatore-testo { transform: scale(1.03); }
   .progetto:hover h3, .progetto:hover .luogo { transform: scale(1.03); }
   .profilo-testo h1:hover { transform: scale(1.02); }
+  .pulsante:not(.disattivo):hover { transform: scale(1.04); }
   .menu a:hover, .collegamenti a:hover, .naviga a:hover, .indietro:hover, .scorri:hover, .mappa-carica:hover { transform: scale(1.06); }
   .marchio:hover { transform: scale(1.03); }
   .prossimo:hover { transform: scale(1.02); }
@@ -253,7 +282,7 @@ a:hover { color: var(--viola-scuro); }
 }
 
 /* Comparsa allo scorrimento (attiva solo se il JavaScript la abilita) */
-.anima .griglia > li, .anima .organizzatori > li, .anima .progetti-griglia > li, .anima .sezione-testa {
+.anima .griglia > li, .anima .organizzatori > li, .anima .progetti-griglia > li, .anima .sezione-testa, .anima .nomi, .anima .iscrizioni > li {
   opacity: 0; transform: translate3d(0, 40px, 0) scale(0.97);
   transition: opacity 1.1s cubic-bezier(.2, .7, .2, 1), transform 1.2s cubic-bezier(.2, .7, .2, 1);
 }

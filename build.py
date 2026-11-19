@@ -85,6 +85,7 @@ def testa(sito, titolo, base, descrizione=""):
 <a href="{base}{IDX}#programma">Programma</a>
 <a href="{base}{IDX}#come-arrivare">Come arrivare</a>
 <a href="{base}{IDX}#info">Info</a>
+<a class="menu-iscrizione" href="{base}iscrizione/{IDX}">Iscrizione</a>
 {f'<a class="ig" href="{e(sito["instagram_url"])}">Instagram ↗</a>' if sito.get('instagram_url') else ''}
 </nav>
 </div>
@@ -97,7 +98,7 @@ ANIMA_JS = """<script>
 /* Comparsa morbida degli elementi allo scorrimento */
 (function () {
   if (!("IntersectionObserver" in window) || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  var el = document.querySelectorAll(".griglia > li, .organizzatori > li, .progetti-griglia > li, .sezione-testa");
+  var el = document.querySelectorAll(".griglia > li, .organizzatori > li, .progetti-griglia > li, .sezione-testa, .nomi, .iscrizioni > li");
   if (!el.length) return;
   if (!document.documentElement.classList.contains("anima")) return;
   var io = new IntersectionObserver(function (voci) {
@@ -170,6 +171,59 @@ def scheda_organizzatore(o, base):
 </li>"""
 
 
+def elenco_nomi(titolo, nomi):
+    if not nomi:
+        return ""
+    voci = "".join(f"<li>{e(n)}</li>" for n in nomi)
+    return f"""<div class="comitato">
+<div class="sezione-testa"><h2>{e(titolo)}</h2></div>
+<ul class="nomi">{voci}</ul>
+</div>"""
+
+
+def pulsante(url, testo):
+    if url:
+        return f'<a class="pulsante" href="{e(url)}">{e(testo)} ↗</a>'
+    return f'<span class="pulsante disattivo" aria-disabled="true">{e(testo)} · link in arrivo</span>'
+
+
+def pagina_iscrizione(sito):
+    base = "../"
+    i = sito.get("iscrizione", {})
+    crediti = i.get("architetti_crediti") or "[numero di crediti formativi da specificare]"
+    return testa(sito, f"Iscrizione — {sito['titolo']}", base, f"Come iscriversi al convegno {sito['titolo']}, {sito['date']}.") + f"""
+<div class="wrap sezione">
+<a class="indietro" href="{base}{IDX}">← Torna al sito</a>
+<header class="pagina-testa">
+<p class="etichetta">{e(sito['titolo'])} · {e(sito['date'])}</p>
+<h1>Iscrizione</h1>
+<div class="barra-o-pagina" aria-hidden="true"></div>
+<p class="geo">Le modalità di partecipazione cambiano a seconda di chi sei: scegli il percorso adatto a te.</p>
+</header>
+<ul class="iscrizioni">
+<li class="iscrizione">
+<span class="etichetta">Architetti</span>
+<h2 class="serif">Con crediti formativi</h2>
+<p class="geo">Gli architetti che desiderano ottenere i crediti formativi professionali devono iscriversi tramite la piattaforma dell’Ordine degli Architetti. Crediti riconosciuti: {e(crediti)}.</p>
+{pulsante(i.get("architetti_url"), "Iscriviti sul portale dell’Ordine")}
+</li>
+<li class="iscrizione">
+<span class="etichetta">Pubblico</span>
+<h2 class="serif">Partecipanti esterni</h2>
+<p class="geo">Chi partecipa senza richiedere crediti formativi si iscrive dalla sezione convegni del sito del Politecnico di Milano.</p>
+{pulsante(i.get("privati_url"), "Iscriviti sul sito del Politecnico")}
+</li>
+<li class="iscrizione studenti">
+<span class="etichetta">Studenti</span>
+<h2 class="serif">Nessuna iscrizione</h2>
+<p class="geo">Per gli studenti non è necessario iscriversi: basta presentarsi in aula.</p>
+<a class="pulsante secondario" href="{base}{IDX}#come-arrivare">Come arrivare</a>
+</li>
+</ul>
+</div>
+""" + piede(sito)
+
+
 def home(sito, relatori, svelati, oggi_):
     base = "./"
     prossimo = next((r for r in relatori if r["data"] > oggi_), None)
@@ -203,10 +257,12 @@ def home(sito, relatori, svelati, oggi_):
 </aside>
 </section>
 <section class="wrap sezione" id="organizzatori">
-<div class="sezione-testa"><h2>Organizzatori</h2><p>Il convegno è a cura di</p></div>
+<div class="sezione-testa"><h2>Organizzatori</h2><p>Responsabili scientifici</p></div>
 <ul class="organizzatori">
 {organizzatori}
 </ul>
+{elenco_nomi("Comitato scientifico", sito.get("comitato_scientifico", []))}
+{elenco_nomi("Comitato organizzativo", sito.get("comitato_organizzativo", []))}
 </section>
 <section class="wrap sezione" id="relatori">
 <div class="sezione-testa"><h2>Relatori</h2><p>Un nuovo nome ogni settimana, insieme al post su Instagram</p></div>
@@ -384,6 +440,8 @@ def main():
     if (ROOT / "src" / "pubblici").exists():
         shutil.copytree(ROOT / "src" / "pubblici", OUT, dirs_exist_ok=True)
     (OUT / "index.html").write_text(home(sito, relatori, svelati, oggi_), "utf-8")
+    (OUT / "iscrizione").mkdir()
+    (OUT / "iscrizione" / "index.html").write_text(pagina_iscrizione(sito), "utf-8")
     immagini = PRIV / "immagini"
     for r in svelati:
         d = OUT / "relatori" / r["id"]
