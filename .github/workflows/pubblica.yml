@@ -29,11 +29,11 @@ jobs:
 
       - name: Decifra i dati dei relatori
         env:
-          CHIAVE_DATI: ${{ secrets.CHIAVE_DATI }}
+          CHIAVE_PRIVATA_DATI: ${{ secrets.CHIAVE_PRIVATA_DATI }}
         run: |
           if [ -f data/dati.enc ]; then
-            if [ -z "$CHIAVE_DATI" ]; then
-              echo "::error::Manca il secret CHIAVE_DATI: impossibile decifrare data/dati.enc"
+            if [ -z "$CHIAVE_PRIVATA_DATI" ]; then
+              echo "::error::Manca il secret CHIAVE_PRIVATA_DATI: impossibile decifrare data/dati.enc"
               exit 1
             fi
             bash tools/cifra.sh decifra

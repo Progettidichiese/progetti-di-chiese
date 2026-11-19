@@ -41,8 +41,10 @@ Chi lavora al sito: comunica in italiano, gli utenti non sono sviluppatori.
 ## Riservatezza dei relatori futuri (IMPORTANTE)
 Il repository è pubblico (GitHub Pages gratuito). I dati veri non vanno MAI committati in chiaro:
 - `data/privato/` è in `.gitignore`.
-- Si committa solo `data/dati.enc`, creato con `CHIAVE_DATI=… bash tools/cifra.sh cifra`.
-- La chiave sta solo nel secret del repository `CHIAVE_DATI`; il workflow decifra prima della build.
+- Cifratura a coppia di chiavi: per CIFRARE basta la chiave pubblica nel repo (`data/chiave_pubblica.pem`):
+  `bash tools/cifra.sh cifra` → si committano `data/dati.enc` + `data/dati.chiave.enc`. Nessun segreto necessario.
+- La chiave privata esiste SOLO nel secret del repository `CHIAVE_PRIVATA_DATI`; il workflow decifra prima della build.
+  Non è conservata altrove da Claude: se va persa, si genera una nuova coppia e si ricifrano i dati.
 - Le immagini di un relatore vengono copiate nel sito solo dal giorno del suo svelamento.
 
 ## Schema dati (dal foglio Excel "Progetti_di_chiese_relatori_MODELLO")
