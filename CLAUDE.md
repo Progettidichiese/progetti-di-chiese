@@ -21,7 +21,10 @@ Chi lavora al sito: comunica in italiano, gli utenti non sono sviluppatori.
   Coordinate esatte dell aula (45.4776016, 9.2275393) e link Google Maps fornito dagli organizzatori in `data/sito.json` → `luogo`.
 - Stile: `src/style.css`. File statici extra (favicon, logo): `src/pubblici/` (copiati nella radice del sito).
 - Pubblicazione: `.github/workflows/pubblica.yml` → GitHub Pages, a ogni push su `main`
-  e ogni giorno alle 05:05 UTC (06:05 in Italia). Si può lanciare a mano da Actions → "Run workflow".
+  e ogni giorno alle 05:05 UTC (06:05 in Italia). Si può lanciare a mano da Actions → "Run workflow" (o `gh workflow run pubblica.yml`).
+  GitHub Pages attivo (Source: GitHub Actions) dal 19/11/2026; prima tutte le pubblicazioni fallivano.
+  DOPO OGNI PUSH controllare l'esito con `gh run list --limit 1` / `gh run watch <id>` prima di dire che il sito è aggiornato.
+- Copia da aprire sul computer (con font Adobe): `LOCALE=1 python3 build.py`, poi zip di `_site/`.
 
 ## Fase di costruzione
 - `data/sito.json` → `"in_costruzione": true` aggiunge noindex e un robots.txt che blocca i motori di ricerca.
