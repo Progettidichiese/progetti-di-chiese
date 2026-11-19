@@ -21,9 +21,8 @@
   --pietra: #E4DFD8;
   --linea: #E2DDD6;
   --serif: "itc-bodoni-seventytwo-pro", "Bodoni Moda", serif;
-  /* titolo e sottotitolo dell'apertura: nella locandina sono in Bodoni URW (da aggiungere al kit Adobe);
-     intanto Bodoni Moda, più vicino al disegno della locandina rispetto al Bodoni 72 */
-  --titolo: "bodoni-urw", "Bodoni Moda", serif;
+  /* titolo dell'apertura: come nella locandina, Bodoni 72 Bold, corpo 87 / interlinea 92 (rapporto ~1.06) */
+  --titolo: var(--serif);
   --geo: "itc-avant-garde-gothic-pro", "Questrial", sans-serif;
   --grot: "neue-haas-grotesk-text", "neue-haas-grotesk-display", "Inter Tight", "Helvetica Neue", Arial, sans-serif;
   --barra: 18px;
@@ -69,11 +68,11 @@ a:hover { color: var(--viola-scuro); }
 .data-grande { margin-top: 18px !important; font-family: var(--serif); font-weight: 900; font-size: clamp(30px, 3.4vw, 50px); letter-spacing: -0.005em; line-height: 1.1; }
 .luogo { margin-top: 8px !important; font-size: clamp(16px, 1.4vw, 19px); }
 .luogo strong { font-weight: 700; text-transform: uppercase; letter-spacing: 0.02em; }
-.apertura h1 { margin: clamp(28px, 6vh, 64px) 0 0; font-family: var(--titolo); font-weight: 800; font-variation-settings: "opsz" 28;
-  font-size: clamp(60px, 12vw, 196px); line-height: 1.16; letter-spacing: -0.02em; }
+.apertura h1 { margin: clamp(28px, 6vh, 64px) 0 0; font-family: var(--titolo); font-weight: 700;
+  font-size: clamp(60px, 12vw, 196px); line-height: 1.08; letter-spacing: 0; }
 .barra-o { height: var(--barra); background: var(--lime); margin-top: clamp(18px, 3.5vh, 36px);
   margin-left: calc(-1 * var(--rientro)); width: calc(100% + var(--rientro)); will-change: transform; }
-.sottotitolo { margin-top: clamp(18px, 3vh, 30px) !important; font-family: var(--titolo); font-weight: 500; font-size: clamp(22px, 2.4vw, 36px); line-height: 1.2; }
+.sottotitolo { margin-top: clamp(18px, 3vh, 30px) !important; font-family: var(--serif); font-weight: 700; font-size: clamp(22px, 2.4vw, 36px); line-height: 1.2; }
 .scorri { align-self: flex-start; margin-top: clamp(28px, 6vh, 64px); display: inline-flex; align-items: center; gap: 10px; min-height: 44px;
   font-size: 14px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--inchiostro); text-decoration: none; }
 .scorri span { color: var(--viola); font-size: 18px; transition: transform .3s ease; }
@@ -101,7 +100,7 @@ a:hover { color: var(--viola-scuro); }
   .occhiello { font-size: 12px; }
   .occhiello span:not(.sep), .luogo .geo, .luogo strong { display: block; }
   .apertura .sep { display: none; }
-  .apertura h1 { line-height: 1.24; }
+  .apertura h1 { line-height: 1.12; }
   .testata .wrap { padding-top: 10px; padding-bottom: 6px; gap: 4px 16px; }
   .logo-polimi { width: 92px; height: 36px; font-size: 9px; }
   .marchio { gap: 12px; }

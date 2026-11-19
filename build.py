@@ -75,6 +75,7 @@ def testa(sito, titolo, base, descrizione=""):
 {'<meta name="robots" content="noindex, nofollow">' if sito.get('in_costruzione') else ''}
 {"" if IDX else '<link rel="preconnect" href="https://use.typekit.net" crossorigin>' + chr(10) + '<link rel="stylesheet" href="https://use.typekit.net/' + ADOBE_KIT + '.css">'}
 <link rel="stylesheet" href="{base}style.css{"" if IDX else "?v=" + VERSIONE_CSS}">
+{'<style>.apertura h1{line-height:1.2}</style>' if IDX else ''}
 <script>if ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("anima");</script>
 </head>
 <body>
