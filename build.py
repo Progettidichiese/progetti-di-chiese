@@ -19,6 +19,8 @@ from zoneinfo import ZoneInfo
 ROOT = Path(__file__).parent
 # versione del foglio di stile: cambia a ogni modifica, così i browser non usano una copia vecchia
 import hashlib
+# kit Adobe Fonts (Web Project "progetti di chiese"): font ufficiali sul sito pubblicato
+ADOBE_KIT = "hst8san"
 VERSIONE_CSS = hashlib.sha1((Path(__file__).parent / "src" / "style.css").read_bytes()).hexdigest()[:8]
 OUT = ROOT / "_site"
 PRIV = ROOT / "data" / "privato"
@@ -71,7 +73,7 @@ def testa(sito, titolo, base, descrizione=""):
 <meta property="og:title" content="{e(titolo)}">
 <meta property="og:description" content="{e(descrizione or sito['sottotitolo'])}">
 {'<meta name="robots" content="noindex, nofollow">' if sito.get('in_costruzione') else ''}
-<link rel="preload" href="{base}fonts/bodoni-moda-latin-standard-normal.woff2" as="font" type="font/woff2" crossorigin>
+{"" if IDX else '<link rel="preconnect" href="https://use.typekit.net" crossorigin>' + chr(10) + '<link rel="stylesheet" href="https://use.typekit.net/' + ADOBE_KIT + '.css">'}
 <link rel="stylesheet" href="{base}style.css{"" if IDX else "?v=" + VERSIONE_CSS}">
 <script>if ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("anima");</script>
 </head>

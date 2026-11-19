@@ -1,5 +1,6 @@
 /* Progetti di chiese — stile del sito
-   Font sostitutivi open source (OFL), ospitati sul sito, in attesa del kit Adobe Fonts:
+   Font ufficiali dal kit Adobe Fonts "hst8san" (caricato in build.py). Se il kit non si carica
+   (o nell'anteprima su Claude) subentrano i sostituti open source (OFL) ospitati sul sito:
    Bodoni Moda ≈ Bodoni 72 / Bodoni URW · Questrial ≈ ITC Avant Garde Gothic · Inter Tight ≈ Neue Haas Grotesk */
 
 @font-face { font-family: "Bodoni Moda"; src: url("fonts/bodoni-moda-latin-standard-normal.woff2") format("woff2"); font-weight: 400 900; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
@@ -19,9 +20,9 @@
   --grigio: #5A5650;
   --pietra: #E4DFD8;
   --linea: #E2DDD6;
-  --serif: "Bodoni Moda", "ITC Bodoni Seventytwo", "Bodoni 72", serif;
-  --geo: "Questrial", "ITC Avant Garde Gothic Pro", sans-serif;
-  --grot: "Inter Tight", "Neue Haas Grotesk Text", "Helvetica Neue", Arial, sans-serif;
+  --serif: "itc-bodoni-seventytwo", "Bodoni Moda", serif;
+  --geo: "itc-avant-garde-gothic-pro", "Questrial", sans-serif;
+  --grot: "neue-haas-grotesk-display", "Inter Tight", "Helvetica Neue", Arial, sans-serif;
   --barra: 18px;
 }
 

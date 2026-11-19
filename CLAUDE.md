@@ -53,13 +53,17 @@ La riga con id "00" è l'esempio del modello e viene ignorata.
 - La pagina relatore si apre sempre dall alto (scrollTo + scrollIntoView anche dentro finestre/iframe).
 - style.css è richiamato con ?v=<hash> perché GitHub Pages fa tenere ai browser copie vecchie per circa 10 minuti (non in ANTEPRIMA).
 - Titolo "Progetti di chiese": interlinea >= 1.16 (1.24 su telefono) perché la g di Progetti non tocchi la h di chiese.
-- Font ufficiali: Bodoni 72 / Bodoni URW (titoli), ITC Avant Garde Gothic Pro (testo), Neue Haas Grotesk (maiuscoletti, etichette).
-  Per ora sostituti open source ospitati sul sito (src/pubblici/fonts, licenza OFL): Bodoni Moda, Questrial, Inter Tight. Quando arriva il kit Adobe Fonts
-  (use.typekit.net) sostituire il preload in `build.py` → `testa()`, le @font-face e le variabili `--serif/--geo/--grot` in `style.css`.
+- Font ufficiali dal kit Adobe Fonts (Web Project "progetti di chiese", ID `hst8san`, costante ADOBE_KIT in build.py):
+  `itc-bodoni-seventytwo` (titoli), `itc-avant-garde-gothic-pro` (testo), `neue-haas-grotesk-display` (maiuscoletti, etichette).
+  Solo `neue-haas-grotesk-display` è confermato dallo screenshot del progetto; gli altri due nomi CSS vanno verificati.
+  Fallback: sostituti OFL ospitati in src/pubblici/fonts (Bodoni Moda, Questrial, Inter Tight), usati anche nell'anteprima su Claude
+  (lì use.typekit.net è bloccato). Il kit funziona solo finché l'abbonamento Creative Cloud del proprietario è attivo.
+  MAI caricare file di font commerciali nel repository (è pubblico): i file desktop forniti (Bodoni 72, Bodoni MT, Minion Pro,
+  Neue Haas da fonnts.com) non hanno licenza web.
 
 ## Da fare
 - Logo Politecnico ufficiale (ora segnaposto "[Logo Polimi]").
-- Kit Adobe Fonts.
+- Verificare i nomi CSS di Bodoni Seventytwo e Avant Garde nel kit Adobe.
 - Dominio proprio: file `CNAME` nella radice + DNS presso il registrar.
 - Programma delle giornate, email, account Instagram (`data/sito.json`).
 - Attenzione: GitHub sospende i workflow pianificati dopo 60 giorni senza attività sul repository.
