@@ -14,6 +14,8 @@ Chi lavora al sito: comunica in italiano, gli utenti non sono sviluppatori.
 - Testi fissi del convegno (titolo, date, organizzatori con bio, luogo e indicazioni, contatti, Instagram): `data/sito.json`.
   Foto degli organizzatori (non riservate): `src/pubblici/organizzatori/<file>` + campo `foto`.
 - Ordine della home: apertura · presentazione · Organizzatori (responsabili scientifici con foto, poi Comitato scientifico e Comitato organizzativo come elenchi di soli nomi) · Relatori · Programma · Come arrivare · piede.
+- Programma: `data/sito.json` → `programma` (giorni con voci {ora, testo, tipo: voce|sessione|pausa} + nota). Orari scritti all'italiana (14.30, 15.45–18.30).
+- Testi di presentazione e declaratoria giustificati con sillabazione; allineati a sinistra sotto i 600 px.
 - Pagina separata `declaratoria/` (testo in `data/sito.json` → `declaratoria`, un elemento per paragrafo, *asterischi* = corsivo), raggiunta dal riquadro malva "Declaratoria →" sotto "Il convegno".
 - Pagina separata `iscrizione/` (voce di menu "Iscrizione" evidenziata): architetti con crediti (portale Ordine), pubblico esterno (sito Polimi, sezione convegni), studenti senza iscrizione.
   Link e numero di crediti in `data/sito.json` → `iscrizione`; finché sono vuoti i pulsanti mostrano "link in arrivo".
@@ -70,5 +72,5 @@ La riga con id "00" è l'esempio del modello e viene ignorata.
 ## Da fare
 - Logo Politecnico ufficiale (ora segnaposto "[Logo Polimi]").
 - Dominio proprio: file `CNAME` nella radice + DNS presso il registrar.
-- Programma delle giornate, email, account Instagram (`data/sito.json`).
+- Programma completo (ora solo di massima), email, account Instagram (`data/sito.json`).
 - Attenzione: GitHub sospende i workflow pianificati dopo 60 giorni senza attività sul repository.

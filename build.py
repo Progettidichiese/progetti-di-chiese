@@ -103,7 +103,7 @@ ANIMA_JS = """<script>
 /* Comparsa morbida degli elementi allo scorrimento */
 (function () {
   if (!("IntersectionObserver" in window) || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  var el = document.querySelectorAll(".griglia > li, .organizzatori > li, .progetti-griglia > li, .sezione-testa, .nomi, .iscrizioni > li");
+  var el = document.querySelectorAll(".griglia > li, .organizzatori > li, .progetti-griglia > li, .sezione-testa, .nomi, .iscrizioni > li, .giorno");
   if (!el.length) return;
   if (!document.documentElement.classList.contains("anima")) return;
   var io = new IntersectionObserver(function (voci) {
@@ -254,6 +254,22 @@ def pagina_iscrizione(sito):
 """ + piede(sito)
 
 
+def programma_html(prog):
+    if not prog:
+        return '<p class="in-arrivo">[Il programma delle due giornate sarà pubblicato qui.]</p>'
+    giorni = []
+    for g in prog.get("giorni", []):
+        voci = "".join(
+            f'<li class="voce-{e(v.get("tipo", "voce"))}"><span class="ora">{e(v["ora"])}</span><span class="cosa">{e(v["testo"])}</span></li>'
+            for v in g.get("voci", []))
+        giorni.append(f"""<div class="giorno">
+<h3><span class="etichetta">{e(g['giorno'])}</span><span class="serif">{e(g['data'])}</span></h3>
+<ol class="scaletta">{voci}</ol>
+</div>""")
+    nota = f'<p class="programma-nota">{e(prog["nota"])}</p>' if prog.get("nota") else ""
+    return f'<div class="programma">{"".join(giorni)}</div>{nota}'
+
+
 def home(sito, relatori, svelati, oggi_):
     base = "./"
     prossimo = next((r for r in relatori if r["data"] > oggi_), None)
@@ -303,7 +319,7 @@ def home(sito, relatori, svelati, oggi_):
 </section>
 <section class="wrap sezione" id="programma">
 <div class="sezione-testa"><h2>Programma</h2></div>
-<p class="in-arrivo">[Il programma delle due giornate sarà pubblicato qui.]</p>
+{programma_html(sito.get("programma"))}
 </section>
 <section class="wrap sezione" id="come-arrivare">
 <div class="sezione-testa"><h2>Come arrivare</h2><p>{e(sito['date'])}</p></div>
