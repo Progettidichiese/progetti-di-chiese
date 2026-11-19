@@ -53,11 +53,10 @@ La riga con id "00" è l'esempio del modello e viene ignorata.
 - La pagina relatore si apre sempre dall alto (scrollTo + scrollIntoView anche dentro finestre/iframe).
 - style.css è richiamato con ?v=<hash> perché GitHub Pages fa tenere ai browser copie vecchie per circa 10 minuti (non in ANTEPRIMA).
 - Titolo "Progetti di chiese": interlinea >= 1.16 (1.24 su telefono) perché la g di Progetti non tocchi la h di chiese.
-- Font ufficiali dal kit Adobe Fonts (Web Project "progetti di chiese", ID `hst8san`, costante ADOBE_KIT in build.py):
-  `itc-bodoni-seventytwo` (titoli), `itc-avant-garde-gothic-pro` (testo), `neue-haas-grotesk-text` (maiuscoletti, etichette, menu).
-  Il kit al 19/11 contiene: neue-haas-grotesk-display (45, 46, 75, 76), neue-haas-grotesk-text (55, 56, 75, 76),
-  libre-bodoni, bodoni-std. ITC Bodoni Seventytwo e ITC Avant Garde Gothic NON sono ancora nel kit: finché non vengono
-  aggiunti al progetto Adobe, titoli e testo usano i sostituti (nessuna modifica al codice necessaria quando li aggiungono).
+- Font ufficiali dal kit Adobe Fonts (Web Project "progetti di chiese", ID `hst8san`, costante ADOBE_KIT in build.py),
+  nomi CSS verificati leggendo https://use.typekit.net/hst8san.css il 19/11/2026:
+  `itc-bodoni-seventytwo-pro` 400/700 (titoli), `itc-avant-garde-gothic-pro` 300 = Book / 700 (testo),
+  `neue-haas-grotesk-text` 400/700 (maiuscoletti, etichette, menu). Nel kit anche neue-haas-grotesk-display, libre-bodoni, bodoni-std (non usati).
   Fallback: sostituti OFL ospitati in src/pubblici/fonts (Bodoni Moda, Questrial, Inter Tight), usati anche nell'anteprima su Claude
   (lì use.typekit.net è bloccato). Il kit funziona solo finché l'abbonamento Creative Cloud del proprietario è attivo.
   MAI caricare file di font commerciali nel repository (è pubblico): i file desktop forniti (Bodoni 72, Bodoni MT, Minion Pro,
@@ -65,7 +64,6 @@ La riga con id "00" è l'esempio del modello e viene ignorata.
 
 ## Da fare
 - Logo Politecnico ufficiale (ora segnaposto "[Logo Polimi]").
-- Aggiungere ITC Bodoni Seventytwo e ITC Avant Garde Gothic al Web Project Adobe e verificarne i nomi CSS.
 - Dominio proprio: file `CNAME` nella radice + DNS presso il registrar.
 - Programma delle giornate, email, account Instagram (`data/sito.json`).
 - Attenzione: GitHub sospende i workflow pianificati dopo 60 giorni senza attività sul repository.
