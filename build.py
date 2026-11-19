@@ -192,6 +192,31 @@ def pulsante(url, testo):
     return f'<span class="pulsante disattivo" aria-disabled="true">{e(testo)} · link in arrivo</span>'
 
 
+def corsivo(t):
+    """Testo con *corsivo* (es. titoli di opere) → HTML sicuro."""
+    parti = e(t).split("*")
+    return "".join(f"<em>{x}</em>" if i % 2 else x for i, x in enumerate(parti))
+
+
+def pagina_declaratoria(sito):
+    base = "../"
+    paragrafi = "\n".join(f"<p>{corsivo(t)}</p>" for t in sito.get("declaratoria", []))
+    return testa(sito, f"Declaratoria — {sito['titolo']}", base, f"Declaratoria del convegno {sito['titolo']}, {sito['date']}.") + f"""
+<div class="wrap sezione">
+<a class="indietro" href="{base}{IDX}">← Torna al sito</a>
+<header class="pagina-testa">
+<p class="etichetta">{e(sito['titolo'])} · {e(sito['date'])}</p>
+<h1>Declaratoria</h1>
+<div class="barra-o-pagina" aria-hidden="true"></div>
+</header>
+<div class="testo-lungo">
+{paragrafi}
+</div>
+<a class="pulsante secondario" href="{base}iscrizione/{IDX}">Iscrizione al convegno</a>
+</div>
+""" + piede(sito)
+
+
 def pagina_iscrizione(sito):
     base = "../"
     i = sito.get("iscrizione", {})
@@ -256,6 +281,7 @@ def home(sito, relatori, svelati, oggi_):
 <div class="presentazione-testo">
 <h2 class="etichetta">Il convegno</h2>
 <p>{e(sito['presentazione'])}</p>
+{f'<a class="link-declaratoria" href="{base}declaratoria/{IDX}">Declaratoria <span aria-hidden="true">→</span></a>' if sito.get('declaratoria') else ''}
 </div>
 <aside class="presentazione-lato">
 <div class="prossimo"><span class="etichetta">{'Prossimo relatore' if prossimo else 'Relatori'}</span>{box}<span class="geo">{len(svelati)} di {len(relatori)} relatori annunciati</span></div>
@@ -445,6 +471,9 @@ def main():
     if (ROOT / "src" / "pubblici").exists():
         shutil.copytree(ROOT / "src" / "pubblici", OUT, dirs_exist_ok=True)
     (OUT / "index.html").write_text(home(sito, relatori, svelati, oggi_), "utf-8")
+    if sito.get("declaratoria"):
+        (OUT / "declaratoria").mkdir()
+        (OUT / "declaratoria" / "index.html").write_text(pagina_declaratoria(sito), "utf-8")
     (OUT / "iscrizione").mkdir()
     (OUT / "iscrizione" / "index.html").write_text(pagina_iscrizione(sito), "utf-8")
     immagini = PRIV / "immagini"

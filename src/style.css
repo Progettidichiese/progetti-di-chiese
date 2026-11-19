@@ -146,6 +146,18 @@ a:hover { color: var(--viola-scuro); }
 .organizzatore-testo h3 { margin: 0; font-weight: 700; font-size: 28px; line-height: 1.15; }
 .organizzatore-testo p { margin: 6px 0 0; font-size: 16px; line-height: 1.55; }
 
+/* Link alla declaratoria (malva) */
+.link-declaratoria { display: inline-flex; align-items: center; gap: 10px; margin-top: 22px; min-height: 44px; padding: 0 18px;
+  background: var(--malva); color: var(--inchiostro); text-decoration: none; font-family: var(--serif); font-weight: 700; font-size: 22px; }
+.link-declaratoria span { color: var(--viola); transition: transform .3s ease; }
+.link-declaratoria:hover { color: var(--inchiostro); background: #C7A3BB; }
+.link-declaratoria:hover span { transform: translateX(4px); }
+
+/* Testi lunghi (declaratoria) */
+.testo-lungo { max-width: 68ch; margin-bottom: 48px; }
+.testo-lungo p { margin: 0 0 1.2em; font-family: var(--geo); font-size: clamp(18px, 1.5vw, 20px); line-height: 1.65; }
+.testo-lungo p:first-child { font-size: clamp(21px, 1.9vw, 25px); line-height: 1.5; }
+
 /* Comitati (solo nomi) */
 .comitato { margin-top: 88px; }
 .nomi { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0 32px; }
