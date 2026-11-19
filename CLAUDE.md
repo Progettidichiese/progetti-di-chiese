@@ -57,12 +57,16 @@ La riga con id "00" è l'esempio del modello e viene ignorata.
   nomi CSS verificati leggendo https://use.typekit.net/hst8san.css il 19/11/2026:
   `itc-bodoni-seventytwo-pro` 400/700 (titoli), `itc-avant-garde-gothic-pro` 300 = Book / 700 (testo),
   `neue-haas-grotesk-text` 400/700 (maiuscoletti, etichette, menu). Nel kit anche neue-haas-grotesk-display, libre-bodoni, bodoni-std (non usati).
+  Titolo "Progetti di chiese" e sottotitolo dell'apertura: variabile `--titolo`. Nella locandina NON sono in Bodoni 72
+  (più chiuso, grazie più spesse) ma probabilmente in Bodoni URW (da Adobe Fonts, per questo assente dal pacchetto InDesign).
+  Nome esatto da confermare in InDesign e da aggiungere al kit; intanto Bodoni Moda 800, opsz 28, spaziatura -0.02em.
   Fallback: sostituti OFL ospitati in src/pubblici/fonts (Bodoni Moda, Questrial, Inter Tight), usati anche nell'anteprima su Claude
   (lì use.typekit.net è bloccato). Il kit funziona solo finché l'abbonamento Creative Cloud del proprietario è attivo.
   MAI caricare file di font commerciali nel repository (è pubblico): i file desktop forniti (Bodoni 72, Bodoni MT, Minion Pro,
   Neue Haas da fonnts.com) non hanno licenza web.
 
 ## Da fare
+- Confermare il font del titolo della locandina (Bodoni URW?) e aggiungerlo al kit Adobe; poi aggiornare `--titolo`.
 - Logo Politecnico ufficiale (ora segnaposto "[Logo Polimi]").
 - Dominio proprio: file `CNAME` nella radice + DNS presso il registrar.
 - Programma delle giornate, email, account Instagram (`data/sito.json`).
