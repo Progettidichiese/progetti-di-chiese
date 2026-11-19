@@ -22,6 +22,9 @@ Chi lavora al sito: comunica in italiano, gli utenti non sono sviluppatori.
 - Mappa Google caricata solo al clic su "Mostra la mappa" (niente dati a Google senza azione del visitatore).
   Luogo verificato: Aula De Donato = Campus Leonardo, Edificio 3, piano terra, Piazza Leonardo da Vinci 32.
   Coordinate esatte dell aula (45.4776016, 9.2275393) e link Google Maps fornito dagli organizzatori in `data/sito.json` → `luogo`.
+- Anteprima dei link condivisi (Open Graph): immagine `src/pubblici/condivisione.jpg` (1200×630, ritaglio della locandina);
+  per i relatori la copertina del progetto 1. Gli URL assoluti usano `url_sito` in `data/sito.json`: AGGIORNARLO al lancio con il dominio.
+- Icona: `src/pubblici/favicon.svg` (croce viola/lime) + favicon.ico, favicon-32.png, apple-touch-icon.png.
 - Stile: `src/style.css`. File statici extra (favicon, logo): `src/pubblici/` (copiati nella radice del sito).
 - Pubblicazione: `.github/workflows/pubblica.yml` → GitHub Pages, a ogni push su `main`
   e ogni giorno alle 05:05 UTC (06:05 in Italia). Si può lanciare a mano da Actions → "Run workflow" (o `gh workflow run pubblica.yml`).
@@ -71,6 +74,6 @@ La riga con id "00" è l'esempio del modello e viene ignorata.
 
 ## Da fare
 - Logo Politecnico ufficiale (ora segnaposto "[Logo Polimi]").
-- Dominio proprio: file `CNAME` nella radice + DNS presso il registrar.
+- Dominio proprio: file `CNAME` nella radice + DNS presso il registrar + aggiornare `url_sito`.
 - Programma completo (ora solo di massima), email, account Instagram (`data/sito.json`).
 - Attenzione: GitHub sospende i workflow pianificati dopo 60 giorni senza attività sul repository.

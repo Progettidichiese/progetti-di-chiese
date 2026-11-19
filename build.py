@@ -64,7 +64,13 @@ def carica():
     return sito, relatori, demo
 
 
-def testa(sito, titolo, base, descrizione=""):
+def breve(t, n=155):
+    """Accorcia un testo per le anteprime senza spezzare le parole."""
+    t = " ".join(str(t).split())
+    return t if len(t) <= n else t[:n].rsplit(" ", 1)[0].rstrip(",;:") + "…"
+
+
+def testa(sito, titolo, base, descrizione="", percorso="", immagine=""):
     return f"""<!doctype html>
 <html lang="it">
 <head>
@@ -72,8 +78,20 @@ def testa(sito, titolo, base, descrizione=""):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{e(titolo)}</title>
 <meta name="description" content="{e(descrizione or sito['sottotitolo'])}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{e(sito['titolo'])}">
+<meta property="og:locale" content="it_IT">
 <meta property="og:title" content="{e(titolo)}">
 <meta property="og:description" content="{e(descrizione or sito['sottotitolo'])}">
+<meta property="og:url" content="{e(sito.get('url_sito', '').rstrip('/'))}/{e(percorso)}">
+<meta property="og:image" content="{e(sito.get('url_sito', '').rstrip('/'))}/{e(immagine or 'condivisione.jpg')}">
+{'' if immagine else '<meta property="og:image:width" content="1200">' + chr(10) + '<meta property="og:image:height" content="630">'}
+<meta property="og:image:alt" content="{e(sito['titolo'])} — {e(sito['sottotitolo'])}, {e(sito['date'])}, {e(sito['sede'])}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#FCFBF8">
+<link rel="icon" href="{base}favicon.svg" type="image/svg+xml">
+<link rel="icon" href="{base}favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="{base}apple-touch-icon.png">
 {'<meta name="robots" content="noindex, nofollow">' if sito.get('in_costruzione') else ''}
 {"" if SENZA_ADOBE else '<link rel="preconnect" href="https://use.typekit.net" crossorigin>' + chr(10) + '<link rel="stylesheet" href="https://use.typekit.net/' + ADOBE_KIT + '.css">'}
 <link rel="stylesheet" href="{base}style.css{"" if IDX else "?v=" + VERSIONE_CSS}">
@@ -201,7 +219,7 @@ def corsivo(t):
 def pagina_declaratoria(sito):
     base = "../"
     paragrafi = "\n".join(f"<p>{corsivo(t)}</p>" for t in sito.get("declaratoria", []))
-    return testa(sito, f"Declaratoria — {sito['titolo']}", base, f"Declaratoria del convegno {sito['titolo']}, {sito['date']}.") + f"""
+    return testa(sito, f"Declaratoria — {sito['titolo']}", base, f"Declaratoria del convegno {sito['titolo']}, {sito['date']}.", "declaratoria/") + f"""
 <div class="wrap sezione">
 <a class="indietro" href="{base}{IDX}">← Torna al sito</a>
 <header class="pagina-testa">
@@ -221,7 +239,7 @@ def pagina_iscrizione(sito):
     base = "../"
     i = sito.get("iscrizione", {})
     crediti = i.get("architetti_crediti") or "[numero di crediti formativi da specificare]"
-    return testa(sito, f"Iscrizione — {sito['titolo']}", base, f"Come iscriversi al convegno {sito['titolo']}, {sito['date']}.") + f"""
+    return testa(sito, f"Iscrizione — {sito['titolo']}", base, f"Come iscriversi al convegno {sito['titolo']}, {sito['date']}.", "iscrizione/") + f"""
 <div class="wrap sezione">
 <a class="indietro" href="{base}{IDX}">← Torna al sito</a>
 <header class="pagina-testa">
@@ -280,7 +298,7 @@ def home(sito, relatori, svelati, oggi_):
     schede = "\n".join(scheda(r, r in svelati, base) for r in relatori)
     box = (f'<span class="serif">{data_it(prossimo["data"])}</span>' if prossimo
            else '<span class="serif">Tutti annunciati</span>')
-    return testa(sito, f"{sito['titolo']} — {sito['sottotitolo']}", base, sito["presentazione"][:155]) + f"""
+    return testa(sito, f"{sito['titolo']} — {sito['sottotitolo']}", base, breve(sito["presentazione"])) + f"""
 <section class="apertura" aria-label="Presentazione">
 <div class="barra-v" aria-hidden="true"></div>
 <div class="apertura-corpo">
@@ -414,7 +432,7 @@ def pagina_relatore(sito, r, svelati):
 {f'<p>{e(p["descrizione_it"])}</p>' if p.get('descrizione_it') else ''}
 {f'<span class="credito">{e(p["credito_immagine"])}</span>' if p.get('credito_immagine') else ''}
 </li>""" for p in r["progetti"])
-    return testa(sito, f"{nome} — {sito['titolo']}", base, f"{r.get('qualifica', '')}. {sito['titolo']}, {sito['date']}.") + f"""
+    return testa(sito, f"{nome} — {sito['titolo']}", base, f"{r.get('qualifica', '')}. {sito['titolo']}, {sito['date']}.", f"relatori/{r['id']}/", f"img/{p1['immagine']}" if p1.get("immagine") else "") + f"""
 <div class="wrap"><a class="indietro" href="{base}{IDX}#relatori">← Tutti i relatori</a></div>
 {copertina}
 <div class="wrap sezione">
