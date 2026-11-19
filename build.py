@@ -249,7 +249,6 @@ def pagina_iscrizione(sito):
 <p class="etichetta">{e(sito['titolo'])} · {e(sito['date'])}</p>
 <h1>Iscrizione</h1>
 <div class="barra-o-pagina" aria-hidden="true"></div>
-<p class="geo">Le modalità di partecipazione cambiano a seconda di chi sei: scegli il percorso adatto a te.</p>
 </header>
 <ul class="iscrizioni">
 <li class="iscrizione">
