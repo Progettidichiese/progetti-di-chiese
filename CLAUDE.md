@@ -8,7 +8,8 @@ Chi lavora al sito: comunica in italiano, gli utenti non sono sviluppatori.
 
 ## Come funziona
 - `build.py` (Python, solo libreria standard) genera il sito statico in `_site/`.
-- Pubblica SOLO i relatori con `data_svelamento <= oggi` (fuso Europe/Rome).
+- Pubblica SOLO i relatori con `data_svelamento <= oggi` (fuso Europe/Rome). Data vuota = data da definire: relatore nascosto, scheda "Data da definire".
+  Le date si possono cambiare in qualsiasi momento: si aggiorna il JSON privato e si ricifra (`bash tools/cifra.sh cifra`).
   Anteprima di un altro giorno: `OGGI=2027-01-15 python3 build.py`.
 - Dati: `data/privato/relatori.json` + `data/privato/immagini/` se esistono, altrimenti `data/demo.json` (prova).
 - Testi fissi del convegno (titolo, date, organizzatori con bio, luogo e indicazioni, contatti, Instagram): `data/sito.json`.

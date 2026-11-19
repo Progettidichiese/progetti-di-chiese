@@ -55,12 +55,14 @@ def carica():
         if not rid or rid == "00":
             continue  # riga di esempio
         r["id"] = rid
-        r["data"] = dt.date.fromisoformat(str(r["data_svelamento"])[:10])
+        # data vuota = non ancora decisa: il relatore resta nascosto (scheda "data da definire")
+        grezza = str(r.get("data_svelamento") or "").strip()[:10]
+        r["data"] = dt.date.fromisoformat(grezza) if grezza else None
         r["progetti"] = sorted(
             (p for p in dati.get("progetti", []) if str(p.get("id_relatore", "")).strip().zfill(2) == rid),
             key=lambda p: float(p.get("ordine") or 0))
         relatori.append(r)
-    relatori.sort(key=lambda r: (r["data"], r["id"]))
+    relatori.sort(key=lambda r: (r["data"] or dt.date.max, r["id"]))
     return sito, relatori, demo
 
 
@@ -165,10 +167,11 @@ def img_tag(nome, alt, base):
 def scheda(r, aperto, base):
     num = r["id"]
     if not aperto:
-        return f"""<li class="scheda chiusa" aria-label="Relatore {num}, annunciato il {data_it(r['data'])}">
+        quando = f"Svelato il {data_it(r['data'])}" if r["data"] else "Data da definire"
+        return f"""<li class="scheda chiusa" aria-label="Relatore {num}: {quando.lower()}">
 <div class="ritratto"><svg aria-hidden="true" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="1"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><span class="num">{num}</span></div>
 <div class="filo"></div>
-<div class="scheda-testo"><span class="etichetta">In arrivo</span><span class="nome">Svelato il {data_it(r['data'])}</span></div>
+<div class="scheda-testo"><span class="etichetta">In arrivo</span><span class="nome">{quando}</span></div>
 </li>"""
     nome = f"{r.get('nome', '')} {r.get('cognome', '')}".strip()
     foto = img_tag(r.get("foto"), f"Ritratto di {nome}", base) or \
@@ -290,7 +293,7 @@ def programma_html(prog):
 
 def home(sito, relatori, svelati, oggi_):
     base = "./"
-    prossimo = next((r for r in relatori if r["data"] > oggi_), None)
+    prossimo = next((r for r in relatori if r["data"] and r["data"] > oggi_), None)
     organizzatori = "\n".join(scheda_organizzatore(o, base) for o in sito.get("organizzatori", []))
     luogo = sito.get("luogo", {})
     coord = f'{luogo.get("lat")},{luogo.get("lng")}'
@@ -492,7 +495,7 @@ window.addEventListener("pageshow", inCima);
 def main():
     sito, relatori, demo = carica()
     oggi_ = oggi()
-    svelati = [r for r in relatori if r["data"] <= oggi_]
+    svelati = [r for r in relatori if r["data"] and r["data"] <= oggi_]
     if OUT.exists():
         shutil.rmtree(OUT)
     (OUT / "img").mkdir(parents=True)
